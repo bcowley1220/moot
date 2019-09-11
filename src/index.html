@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mail</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta
+      name="google-signin-client_id"
+      content="407577431620-i1tf6d865l5tq4jl0jn448cd1d6pmhpe.apps.googleusercontent.com"
+    />
+    <meta
+      name="google-signin-scope"
+      content="profile email https://www.googleapis.com/auth/gmail.readonly"
+    />
+  </head>
+  <body>
+    <script>
+      function onSignIn(googleUser) {
+        let access_token = googleUser.getAuthResponse(true).access_token;
+        let element = document.getElementById("app-root");
+        element.setAttribute("data-access_token", access_token);
+      }
+    </script>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <app-root id="app-root" data-access_token="null"></app-root>
+  </body>
+</html>
