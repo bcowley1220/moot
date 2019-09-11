@@ -2,6 +2,7 @@
 <button (click)="getEmailContent()">Email Content</button>
 <button (click)="showEmailData()">Email Data</button>
 <button (click)="showMessageData()">Message Data</button>
+<button (click)="sortingEmails()">Sorting Data</button>
 <div *ngFor="let message of messageData">
   <p>{{ message.snippet }}</p>
 </div>
