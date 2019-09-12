@@ -3,10 +3,10 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { MailComponent } from "./mail/mail.component";
+import { OnboardComponent } from "./onboard/onboard.component";
 import { MailService } from "./services/mail.service";
 import { RouterModule, Routes } from "@angular/router";
-import { OnboardComponent } from './onboard/onboard.component';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from "./main/main.component";
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/onboard", pathMatch: "full" },

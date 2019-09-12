@@ -1,0 +1,21 @@
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.order {
+  border: 1.5px solid hotpink;
+  border-radius: 20px;
+  height: 100px;
+  width: 80%;
+  margin: 30px;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+circle {
+  border: 1px solid hotpink;
+  border-radius: 25px;
+  height: 55px;
+  width: 55px;
+  flex-direction: column;
+  margin: 15px;
+}
