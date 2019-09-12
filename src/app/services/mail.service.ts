@@ -24,7 +24,7 @@ export class MailService {
     console.log("got access_token", access_token);
     this.accessToken = access_token;
     return this.http.get(
-      "https://www.googleapis.com/gmail/v1/users/me/messages",
+      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon }",
       {
         headers: { Authorization: "Bearer " + this.accessToken }
       }
