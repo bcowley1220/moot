@@ -1,0 +1,12 @@
+<div>
+  <p class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
+    On Board stuff full first view
+  </p>
+  <p class="whole" id="second" *ngIf="showSecond" (click)="togglePageTwo()">
+    second view
+  </p>
+  <p class="whole" id="third" *ngIf="showThird">
+    third view
+    <button (click)="goToMain()">Start App</button>
+  </p>
+</div>

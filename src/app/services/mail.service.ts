@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ThrowStmt } from "@angular/compiler";
 import { ValueConverter } from "@angular/compiler/src/render3/view/template";
+import { Router } from "@angular/router";
 @Injectable({
   providedIn: "root"
 })
@@ -15,8 +16,11 @@ export class MailService {
   messageData: any = [];
   encodedBody: any;
   filteredList: any = [];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
+  navigateToMain() {
+    this.router.navigate(["main"]);
+  }
   getEmailIdCall(): Observable<any> {
     const access_token = document
       .getElementById("app-root")
@@ -24,7 +28,7 @@ export class MailService {
     console.log("got access_token", access_token);
     this.accessToken = access_token;
     return this.http.get(
-      "https://www.googleapis.com/gmail/v1/users/me/messages",
+      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon }",
       {
         headers: { Authorization: "Bearer " + this.accessToken }
       }
@@ -51,7 +55,7 @@ export class MailService {
         // console.log(holder[i].name);
         if (holder[i].name == "Subject") {
           // console.log(holder[i].value);
-          if (holder[i].value.includes("Your Amazon.com order")) {
+          if (holder[i].value.includes("Order")) {
             this.filteredList.push(this.messageData[i]);
             // console.log(this.messageData[i]);
           }
