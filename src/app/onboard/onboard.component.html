@@ -1,0 +1,36 @@
+<body>
+  <div *ngIf="!showBoard">
+    <div class="whole" id="first" *ngIf="!showFirst" (click)="togglePageOne()">
+      <img src="assets/logo.gif" alt="logo" />
+    </div>
+    <div
+      class="whole"
+      id="second"
+      *ngIf="!showSecond"
+      (click)="togglePageTwo()"
+    >
+      <p class="highlight" id="hello">hello.</p>
+      <p>welcome to</p>
+      <p class="highlight">moot</p>
+      <p>
+        an application to<br />
+        manage <br />
+        online <br />
+        orders & <br />
+        tracking <br />
+      </p>
+    </div>
+    <div class="whole" id="third" *ngIf="!showThird">
+      <img src="assets/handshake1.png" alt="handshake agreement" />
+      <p>
+        We've partnered with Google <br />
+        to streamline and organize<br />
+        the shipments<br />
+        coming your way
+      </p>
+      <button *ngIf="!showBoard" (click)="toggleBoard()">
+        Start App
+      </button>
+    </div>
+  </div>
+</body>
