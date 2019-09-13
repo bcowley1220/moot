@@ -19,8 +19,8 @@ export class OnboardComponent implements OnInit {
     this.showSecond = !this.showSecond;
   }
   togglePageTwo() {
-    this.showThird = !this.showThird;
     this.showSecond = !this.showSecond;
+    this.showThird = !this.showThird;
   }
   goToMain() {
     this.mailService.navigateToMain();
