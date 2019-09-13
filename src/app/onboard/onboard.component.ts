@@ -1,35 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { MailService } from "../services/mail.service";
 
 @Component({
-  selector: 'app-onboard',
-  templateUrl: './onboard.component.html',
-  styleUrls: ['./onboard.component.css']
+  selector: "app-onboard",
+  templateUrl: "./onboard.component.html",
+  styleUrls: ["./onboard.component.css"]
 })
 export class OnboardComponent implements OnInit {
-  
-  showBoard: boolean = false;
-  showEmail: boolean = true;
-  showFirst: boolean = false;
-  showSecond: boolean = true;
-  showThird: boolean = true;
+  showFirst: boolean = true;
+  showSecond: boolean = false;
+  showThird: boolean = false;
+  constructor(private mailService: MailService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  toggleBoard():void {
-    this.showBoard = !this.showBoard;
-    this.showEmail = !this.showEmail;
-  }
-  
-  togglePageOne(){
+  togglePageOne() {
     this.showFirst = !this.showFirst;
     this.showSecond = !this.showSecond;
   }
-  togglePageTwo(){
-    this.showThird = !this.showThird;
+  togglePageTwo() {
     this.showSecond = !this.showSecond;
+    this.showThird = !this.showThird;
   }
-
-  ngOnInit() {
+  goToMain() {
+    this.mailService.navigateToMain();
   }
-
 }

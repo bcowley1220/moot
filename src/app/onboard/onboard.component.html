@@ -1,12 +1,14 @@
-<body>
+<div>
   <div *ngIf="!showBoard">
+
     <div class="whole" id="first" *ngIf="!showFirst" (click)="togglePageOne()">
       <img id="logo" src="assets/mootLogo.gif" alt="logo" />
+
     </div>
     <div
       class="whole"
       id="second"
-      *ngIf="!showSecond"
+      *ngIf="showSecond"
       (click)="togglePageTwo()"
     >
       <img id="onboard" src="assets/onboard2.png" alt="handshake agreement" />
@@ -20,19 +22,23 @@
         online <br />
         orders & <br />
         tracking <br />
+
       </p> -->
 
     <div class="whole" id="third" *ngIf="!showThird">
       <img src="assets/handshake1.png" alt="handshake agreement" />
+
       <p>
         We've partnered with Google <br />
         to streamline and organize<br />
         the shipments<br />
         coming your way
+
       </p>
       <button id="button" *ngIf="!showBoard" (click)="toggleBoard()">
+
         Start App
       </button>
     </div>
   </div>
-</body>
+</div>

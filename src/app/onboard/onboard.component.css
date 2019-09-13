@@ -2,7 +2,7 @@
   height: 100vh;
   width: 100vw;
 }
-body {
+div {
   background-color: #b4f8c8;
 }
 
@@ -60,7 +60,7 @@ body {
     animation: 2s;
 } */
 img {
-  width: 80%;
+  width: 25%;
   height: auto;
   margin: 0px;
 }
@@ -68,8 +68,10 @@ p {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: left;
+
   color: white;
   padding: 5px;
+
 }
 .highlight {
   color: #e54e7f;
