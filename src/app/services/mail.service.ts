@@ -21,18 +21,18 @@ export class MailService {
     this.router.navigate(["main"]);
   }
 
-  // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
-  // access token to make an API call
-  // with the query params and the Bearer headers.  This returns a list of email ID's.
-
   getEmailIdCall(): Observable<any> {
+    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // access token to make an API call
+    // with the query params and the Bearer headers.  This returns a list of email ID's.
     const accessToken = document
       .getElementById("app-root")
       .getAttribute("data-access_token");
     console.log("got access_token", accessToken);
     this.accessToken = accessToken;
+    // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
     return this.http.get(
-      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon Order Confirmation}",
+      'https://www.googleapis.com/gmail/v1/users/me/messages?q={ "Amazon Order Confirmation" }',
       {
         headers: { Authorization: "Bearer " + this.accessToken }
       }
@@ -40,6 +40,7 @@ export class MailService {
   }
 
   splitIdsOff(emailData) {
+    // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
     for (let i = 0; i < emailData.length; i++) {
       this.emailIdList.push(emailData[i].id);
     }
@@ -55,8 +56,9 @@ export class MailService {
     );
   }
 
+  // todo: NOT SURE IF ACTUALLY NEEDED ANYMORE NOW THAT WE ARE QUERYING OUR GET LIST
   sortingEmails() {
-    console.log("sortingbutton works");
+    // console.log("sortingbutton works");
     for (let i = 0; i < this.messageData.length; i++) {
       let holder = this.messageData[i].payload.headers;
       // console.log(holder);
@@ -75,28 +77,14 @@ export class MailService {
     }
     console.log(this.filteredList);
   }
-  // let searchList = this.messageData;
-  // searchList = searchList.payload.JSON.stringify(Headers);
-  // console.log(holder.length);
-  // console.log(holder[0][0].name.includes("Delivered-To"));
 
-  // console.log(this.messageData[0].payload.headers.includes("Blizzard"));
-
-  // for (let i = 0; i < searchList.length; i++) {
-  //   if (searchList[i].payload.headers.includes("Linkedin")) {
-  //     // headerList.push(this.messageData[i]);
-  //     console.log(searchList[i]);
-  //   }
+  // showEmailData() {
+  //   console.log(this.emailData);
   // }
-  // console.log(headerList);
-
-  showEmailData() {
-    console.log(this.emailData);
-  }
-
-  showMessageData() {
-    console.dir(this.messageData);
-  }
+  //
+  // showMessageData() {
+  //   console.dir(this.messageData);
+  // }
 
 
   decodeData() {

@@ -25,13 +25,17 @@ export class MailComponent implements OnInit {
       const emailIdData = response.messages; // List of 100 message ID's, threadID's and a next page token
       return (this.emailIdData = emailIdData); // Sets local variable emailIdData equal to the list of Id's
     });
+    // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    this.splitIdsOff();
+    this.getEmailContent();
   }
 
   splitIdsOff() {
     // √ This function takes the emailIdData list and breaks it down into an array of just the ID's in our service
     this.mailService.splitIdsOff(this.emailIdData); // Sends the emailIdData List in as a parameter
     this.emailIdList = this.mailService.emailIdList;
-    console.log(this.emailIdList);
+    // console.log(this.emailIdList);
   }
 
   getEmailContent() {
@@ -42,21 +46,16 @@ export class MailComponent implements OnInit {
       this.mailService
         .getEmailContent(this.emailIdList[i]) // Sends one ID from the emailIdList to the GET request in the service.
         .subscribe(response => {
-          messageData.push(response);
-          return (this.messageData = messageData);
+          messageData.push(response); // Full unedited emails
+          return (this.messageData = messageData); // Sets array from service equal to the array in the component.
         });
     }
   }
 
-  showEmailData() {
-    this.mailService.showEmailData();
-    this.sortingEmails();
-  }
-
-  showMessageData() {
-    this.mailService.messageData = this.messageData;
-    this.mailService.showMessageData();
-  }
+  // showMessageData() {
+  //   this.mailService.messageData = this.messageData;
+  //   this.mailService.showMessageData();
+  // }
 
   decodeData() {
     this.mailService.decodeData();
@@ -66,12 +65,3 @@ export class MailComponent implements OnInit {
     this.mailService.sortingEmails();
   }
 }
-
-// console.log(this.messageData[i].payload.headers[16]
-//   sortingEmails() {
-//     for (let i = 0; i < this.messageData.length; i++) {
-//       this.messageData[i].payload.JSON.Stringify.headers[21].value.includes("Linkedin");
-//       if (true) {
-//         console.log(this.messageData[i].payload.headers[21].value);
-//       }
-//     }
