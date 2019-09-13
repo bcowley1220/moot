@@ -1,38 +1,50 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { ThrowStmt } from "@angular/compiler";
-import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Router } from "@angular/router";
+
 @Injectable({
   providedIn: "root"
 })
 export class MailService {
+  accessToken: string; // from getEmailCall()
   mailIdList: any[] = [];
   mailMessageList: any[] = [];
   emailData: any = [];
-  accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
-  encodedBody: any;
+  decodedBody: any;
   filteredList: any = [];
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
     this.router.navigate(["main"]);
   }
+
   getEmailIdCall(): Observable<any> {
-    const access_token = document
+    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // access token to make an API call
+    // with the query params and the Bearer headers.  This returns a list of email ID's.
+    const accessToken = document
       .getElementById("app-root")
       .getAttribute("data-access_token");
-    console.log("got access_token", access_token);
-    this.accessToken = access_token;
+    console.log("got access_token", accessToken);
+    this.accessToken = accessToken;
+    // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
     return this.http.get(
-      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon }",
+      'https://www.googleapis.com/gmail/v1/users/me/messages?q={ "Amazon Order Confirmation" }',
       {
         headers: { Authorization: "Bearer " + this.accessToken }
       }
     );
+  }
+
+  splitIdsOff(emailData) {
+    // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
+    for (let i = 0; i < emailData.length; i++) {
+      this.emailIdList.push(emailData[i].id);
+    }
+    return this.emailIdList;
   }
 
   getEmailContent(id) {
@@ -44,8 +56,9 @@ export class MailService {
     );
   }
 
+  // todo: NOT SURE IF ACTUALLY NEEDED ANYMORE NOW THAT WE ARE QUERYING OUR GET LIST
   sortingEmails() {
-    console.log("sortingbutton works");
+    // console.log("sortingbutton works");
     for (let i = 0; i < this.messageData.length; i++) {
       let holder = this.messageData[i].payload.headers;
       // console.log(holder);
@@ -64,45 +77,20 @@ export class MailService {
     }
     console.log(this.filteredList);
   }
-  // let searchList = this.messageData;
-  // searchList = searchList.payload.JSON.stringify(Headers);
-  // console.log(holder.length);
-  // console.log(holder[0][0].name.includes("Delivered-To"));
 
-  // console.log(this.messageData[0].payload.headers.includes("Blizzard"));
-
-  // for (let i = 0; i < searchList.length; i++) {
-  //   if (searchList[i].payload.headers.includes("Linkedin")) {
-  //     // headerList.push(this.messageData[i]);
-  //     console.log(searchList[i]);
-  //   }
+  // showEmailData() {
+  //   console.log(this.emailData);
   // }
-  // console.log(headerList);
-
-  showEmailData() {
-    console.log(this.emailData);
-  }
-
-  showMessageData() {
-    console.dir(this.messageData);
-  }
-
-  splitIdsOff(emailData) {
-    for (let i = 0; i < emailData.length; i++) {
-      this.emailIdList.push(emailData[i].id);
-    }
-    // console.log(this.emailIdList);
-    return this.emailIdList;
-  }
-  // !Returning Variable Section
-  // returnMailIdList(){
-  //   return this.mailIdList;
+  //
+  // showMessageData() {
+  //   console.dir(this.messageData);
   // }
-  // returnMailMessage(){
-  //   return this.mailIdList;
-  // }
+
 
   decodeData() {
+    const bodyData = this.messageData[0].payload.parts[0].body.data;
+    console.log(atob(bodyData));
+    this.decodedBody = bodyData;
     // this.encodedBody = JSON.stringify(this.messageData[0].payload.body.data)
     //   .replace(/-/g, "+")
     //   .replace(/_/g, "/");
