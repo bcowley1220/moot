@@ -1,38 +1,49 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { ThrowStmt } from "@angular/compiler";
-import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Router } from "@angular/router";
+
 @Injectable({
   providedIn: "root"
 })
 export class MailService {
+  accessToken: string; // from getEmailCall()
   mailIdList: any[] = [];
   mailMessageList: any[] = [];
   emailData: any = [];
-  accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
-  encodedBody: any;
+  decodedBody: any;
   filteredList: any = [];
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
     this.router.navigate(["main"]);
   }
+
+  // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+  // access token to make an API call
+  // with the query params and the Bearer headers.  This returns a list of email ID's.
+
   getEmailIdCall(): Observable<any> {
-    const access_token = document
+    const accessToken = document
       .getElementById("app-root")
       .getAttribute("data-access_token");
-    console.log("got access_token", access_token);
-    this.accessToken = access_token;
+    console.log("got access_token", accessToken);
+    this.accessToken = accessToken;
     return this.http.get(
-      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon }",
+      "https://www.googleapis.com/gmail/v1/users/me/messages?q={from:Amazon Order Confirmation}",
       {
         headers: { Authorization: "Bearer " + this.accessToken }
       }
     );
+  }
+
+  splitIdsOff(emailData) {
+    for (let i = 0; i < emailData.length; i++) {
+      this.emailIdList.push(emailData[i].id);
+    }
+    return this.emailIdList;
   }
 
   getEmailContent(id) {
@@ -87,22 +98,11 @@ export class MailService {
     console.dir(this.messageData);
   }
 
-  splitIdsOff(emailData) {
-    for (let i = 0; i < emailData.length; i++) {
-      this.emailIdList.push(emailData[i].id);
-    }
-    // console.log(this.emailIdList);
-    return this.emailIdList;
-  }
-  // !Returning Variable Section
-  // returnMailIdList(){
-  //   return this.mailIdList;
-  // }
-  // returnMailMessage(){
-  //   return this.mailIdList;
-  // }
 
   decodeData() {
+    const bodyData = this.messageData[0].payload.parts[0].body.data;
+    console.log(atob(bodyData));
+    this.decodedBody = bodyData;
     // this.encodedBody = JSON.stringify(this.messageData[0].payload.body.data)
     //   .replace(/-/g, "+")
     //   .replace(/_/g, "/");
