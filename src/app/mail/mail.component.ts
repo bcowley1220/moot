@@ -13,6 +13,7 @@ export class MailComponent implements OnInit {
   accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
+  filteredList: any = [];
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // getMailFromId() {
@@ -51,7 +52,7 @@ export class MailComponent implements OnInit {
   }
 
   splitIdsOff() {
-    console.log(this.emailData);
+    // console.log(this.emailData);
     this.mailService.splitIdsOff(this.emailData);
     this.emailIdList = this.mailService.emailIdList;
     console.log(this.emailIdList);
@@ -59,36 +60,27 @@ export class MailComponent implements OnInit {
 
   showEmailData() {
     this.mailService.showEmailData();
+    this.sortingEmails();
   }
 
   showMessageData() {
     this.mailService.messageData = this.messageData;
     this.mailService.showMessageData();
   }
+
+  decodeData() {
+    this.mailService.decodeData();
+  }
+  sortingEmails() {
+    this.mailService.filteredList = this.filteredList;
+    this.mailService.sortingEmails();
+  }
 }
-//  this.http
-//   .get("https://www.googleapis.com/gmail/v1/users/me/messages", {
-//     headers: { Authorization: "Bearer " + this.accessToken }
-//   })
-// .subscribe(response => {
-//   console.log(response);
-//   let emailData = response.messages;
-//   return (this.emailData = emailData);
-
-// });
-// }
-
-//   sortingEmails() {
-//     for (let i = 0; i < this.messageData.length; i++) {
-//       for ()
-//     }
-//   }
-// }
 
 // console.log(this.messageData[i].payload.headers[16]
 //   sortingEmails() {
 //     for (let i = 0; i < this.messageData.length; i++) {
-//       this.messageData[i].payload.headers[21].value.includes("Linkedin");
+//       this.messageData[i].payload.JSON.Stringify.headers[21].value.includes("Linkedin");
 //       if (true) {
 //         console.log(this.messageData[i].payload.headers[21].value);
 //       }
