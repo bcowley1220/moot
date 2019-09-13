@@ -1,12 +1,12 @@
-<body>
+<div>
   <div *ngIf="!showBoard">
-    <div class="whole" id="first" *ngIf="!showFirst" (click)="togglePageOne()">
+    <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
       <img src="assets/logo.gif" alt="logo" />
     </div>
     <div
       class="whole"
       id="second"
-      *ngIf="!showSecond"
+      *ngIf="showSecond"
       (click)="togglePageTwo()"
     >
       <p class="highlight" id="hello">hello.</p>
@@ -20,17 +20,17 @@
         tracking <br />
       </p>
     </div>
-    <div class="whole" id="third" *ngIf="!showThird">
-      <img src="assets/handshake1.png" alt="handshake agreement" />
+    <div class="whole" id="third" *ngIf="showThird">
+      <!-- <img src="assets/handshake1.png" alt="handshake agreement"/>
       <p>
         We've partnered with Google <br />
         to streamline and organize<br />
         the shipments<br />
         coming your way
-      </p>
-      <button *ngIf="!showBoard" (click)="toggleBoard()">
+      </p> -->
+      <button *ngIf="!showBoard" (click)="goToMain()">
         Start App
       </button>
     </div>
   </div>
-</body>
+</div>
