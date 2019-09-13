@@ -5,7 +5,13 @@
   <button (click)="showMessageData()">Message Data</button>
   <button (click)="sortingEmails()">Sorting Data</button>
   <div class="order" *ngFor="let message of messageData">
-    <div class="circle"></div>
-    <p>{{ message.snippet }}</p>
+    <span class="circle"></span>
+    <div class="text">
+      <p>
+        Retailer: <br />
+        Order #<br />
+      </p>
+      <p>{{ message.snippet }}</p>
+    </div>
   </div>
 </div>

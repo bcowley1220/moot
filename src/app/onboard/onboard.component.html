@@ -1,7 +1,7 @@
 <body>
   <div *ngIf="!showBoard">
     <div class="whole" id="first" *ngIf="!showFirst" (click)="togglePageOne()">
-      <img src="assets/logo.gif" alt="logo" />
+      <img id="logo" src="assets/mootLogo.gif" alt="logo" />
     </div>
     <div
       class="whole"
@@ -9,7 +9,9 @@
       *ngIf="!showSecond"
       (click)="togglePageTwo()"
     >
-      <p class="highlight" id="hello">hello.</p>
+      <img id="onboard" src="assets/onboard2.png" alt="handshake agreement" />
+    </div>
+    <!-- <p class="highlight" id="hello">hello.</p>
       <p>welcome to</p>
       <p class="highlight">moot</p>
       <p>
@@ -18,8 +20,8 @@
         online <br />
         orders & <br />
         tracking <br />
-      </p>
-    </div>
+      </p> -->
+
     <div class="whole" id="third" *ngIf="!showThird">
       <img src="assets/handshake1.png" alt="handshake agreement" />
       <p>
@@ -28,7 +30,7 @@
         the shipments<br />
         coming your way
       </p>
-      <button *ngIf="!showBoard" (click)="toggleBoard()">
+      <button id="button" *ngIf="!showBoard" (click)="toggleBoard()">
         Start App
       </button>
     </div>
