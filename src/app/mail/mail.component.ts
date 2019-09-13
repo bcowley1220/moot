@@ -14,6 +14,7 @@ export class MailComponent implements OnInit {
   emailIdList: any = [];
   messageData: any = [];
   filteredList: any = [];
+  googleUser;
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // getMailFromId() {
@@ -76,12 +77,3 @@ export class MailComponent implements OnInit {
     this.mailService.sortingEmails();
   }
 }
-
-// console.log(this.messageData[i].payload.headers[16]
-//   sortingEmails() {
-//     for (let i = 0; i < this.messageData.length; i++) {
-//       this.messageData[i].payload.JSON.Stringify.headers[21].value.includes("Linkedin");
-//       if (true) {
-//         console.log(this.messageData[i].payload.headers[21].value);
-//       }
-//     }
