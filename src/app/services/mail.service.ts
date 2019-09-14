@@ -78,15 +78,8 @@ export class MailService {
     console.log(this.filteredList);
   }
 
-  // showEmailData() {
-  //   console.log(this.emailData);
-  // }
-  //
-  // showMessageData() {
-  //   console.dir(this.messageData);
-  // }
-
   decodeData() {
+    console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
       if (this.messageData[i].payload.parts[0].body.size != 0) {
         this.decodedBodyData.push(
@@ -94,6 +87,7 @@ export class MailService {
             this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
           )
         );
+        // console.log(this.decodedBodyData);
       } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
         this.decodedBodyData.push(
           this.messageData[i].payload.parts[0].parts[0].body.data.replace(
@@ -104,5 +98,6 @@ export class MailService {
       }
       console.log(this.decodedBodyData);
     }
+    // console.log(this.decodedBodyData);
   }
 }
