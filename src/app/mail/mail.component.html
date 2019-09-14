@@ -1,23 +1,17 @@
 <div class="body">
-  <button (click)="splitIdsOff()">Split Id's</button>
+  <!-- <button (click)="splitIdsOff()">Split Id's</button>
   <button (click)="getEmailContent()">Email Content</button>
   <button (click)="showEmailData()">Show Email Data</button>
   <button (click)="decodeData()">Decode Data</button>
   <button (click)="showMessageData()">Message Data</button>
-  <button (click)="sortingEmails()">Sorting Data</button>
+  <button (click)="sortingEmails()">Sorting Data</button> -->
 
   <div class="order" *ngFor="let message of messageData">
     <span class="circle"></span>
     <div class="text">
-      <p>
-        Retailer: <br />
-        Order #<br />
-      </p>
-      <p>{{ message.snippet }}</p>
+      <p>Retailer: {{ message.payload.headers[13].value }}</p>
+      <p>Order #</p>
+      <p>Order Status</p>
     </div>
   </div>
-
 </div>
-
-
-
