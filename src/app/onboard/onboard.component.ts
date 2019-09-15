@@ -12,7 +12,7 @@ export class OnboardComponent implements OnInit {
   showThird: boolean = false;
   constructor(private mailService: MailService) {}
 
-  async  ngOnInit() {
+  async ngOnInit() {
     await this.mailService.getAccessToken();
     await new Promise(resolve => setTimeout(resolve, 2000));
   }
@@ -27,12 +27,12 @@ export class OnboardComponent implements OnInit {
     body.appendChild(script);
   }
 
-  togglePageOne() {
+  toggleOnboardTwo() {
     this.showFirst = !this.showFirst;
     this.showSecond = !this.showSecond;
   }
 
-  togglePageTwo() {
+  toggleOnboardThree() {
     this.loadScript();
     this.showSecond = !this.showSecond;
     this.showThird = !this.showThird;
