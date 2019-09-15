@@ -1,3 +1,4 @@
+
 <div>
   <div *ngIf="!showBoard">
     <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
@@ -31,6 +32,7 @@
       <button *ngIf="!showBoard" (click)="goToMain()">
         Start App
       </button>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </div>
 </div>

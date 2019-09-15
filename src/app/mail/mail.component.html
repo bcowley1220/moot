@@ -7,6 +7,7 @@
   <button (click)="sortingEmails()">Sorting Data</button>
 </div>
 
+<!-- todo: Needs to reference the new array of objects built from the regex-->
 <div class="order" *ngFor="let message of messageData">
   <div class="circle"></div>
   <p>{{ message.snippet }}</p>

@@ -58,19 +58,12 @@ export class MailService {
 
   // todo: NOT SURE IF ACTUALLY NEEDED ANYMORE NOW THAT WE ARE QUERYING OUR GET LIST
   sortingEmails() {
-    // console.log("sortingbutton works");
     for (let i = 0; i < this.messageData.length; i++) {
       let holder = this.messageData[i].payload.headers;
-      // console.log(holder);
-      // holder = Object.values(holder.payload.headers[i]);
-      // console.log(holder);
       for (let i = 0; i < holder.length; i++) {
-        // console.log(holder[i].name);
         if (holder[i].name == "Subject") {
-          // console.log(holder[i].value);
           if (holder[i].value.includes("Order")) {
             this.filteredList.push(this.messageData[i]);
-            // console.log(this.messageData[i]);
           }
         }
       }
@@ -78,13 +71,17 @@ export class MailService {
     console.log(this.filteredList);
   }
 
-  // showEmailData() {
-  //   console.log(this.emailData);
-  // }
-  //
-  // showMessageData() {
-  //   console.dir(this.messageData);
-  // }
+  async getAccessToken() {
+    console.log('Async getAccess Token is working');
+    (window as any).onSignIn = (googleUser) => {
+      console.log("onSignIn function working");
+      const access_token = googleUser.getAuthResponse(true).access_token;
+      const element = document.getElementById("app-root");
+      this.accessToken = access_token;
+      console.log(this.accessToken);
+      element.setAttribute('data-access_token', access_token);
+    };
+  }
 
 
   decodeData() {
