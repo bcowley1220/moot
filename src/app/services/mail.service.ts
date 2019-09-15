@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
-
 @Injectable({
   providedIn: "root"
 })
@@ -15,6 +14,7 @@ export class MailService {
   messageData: any = [];
   decodedBody: any;
   filteredList: any = [];
+  decodedBodyData: any = [];
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
@@ -62,7 +62,8 @@ export class MailService {
       let holder = this.messageData[i].payload.headers;
       for (let i = 0; i < holder.length; i++) {
         if (holder[i].name == "Subject") {
-          if (holder[i].value.includes("Order")) {
+          // console.log(holder[i].value);
+          if (holder[i].value.includes("Amazon Order Confirmation")) {
             this.filteredList.push(this.messageData[i]);
           }
         }
@@ -83,20 +84,26 @@ export class MailService {
     };
   }
 
-
   decodeData() {
-    const bodyData = this.messageData[0].payload.parts[0].body.data;
-    console.log(atob(bodyData));
-    this.decodedBody = bodyData;
-    // this.encodedBody = JSON.stringify(this.messageData[0].payload.body.data)
-    //   .replace(/-/g, "+")
-    //   .replace(/_/g, "/");
-    // console.log(this.encodedBody);
-    // this.encodedBody.replace(/-/g, "+").replace(/_/g, "/");
-    // .replace(/\s/g, "");
-    // console.log(decodeURIComponent(escape(window.atob(this.encodedBody))));
-    // console.log(window.atob(this.encodedBody));
-    // console.log(atob(this.encodedBody.replace(/-/g, "+").replace(/_/g, "/")));
+    console.log(this.messageData);
+    for (let i = 0; i < this.messageData.length; i++) {
+      if (this.messageData[i].payload.parts[0].body.size != 0) {
+        this.decodedBodyData.push(
+          atob(
+            this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
+          )
+        );
+        // console.log(this.decodedBodyData);
+      } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
+        this.decodedBodyData.push(
+          this.messageData[i].payload.parts[0].parts[0].body.data.replace(
+            /\_/g,
+            "/"
+          )
+        );
+      }
+      console.log(this.decodedBodyData);
+    }
+    // console.log(this.decodedBodyData);
   }
-  // !Set Up Return Methods For Variables
 }

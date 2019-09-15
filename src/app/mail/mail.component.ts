@@ -1,10 +1,10 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MailService } from '../services/mail.service';
+import { Component, OnInit, ElementRef } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { MailService } from "../services/mail.service";
 @Component({
-  selector: 'app-mail',
-  templateUrl: './mail.component.html',
-  styleUrls: ['./mail.component.css']
+  selector: "app-mail",
+  templateUrl: "./mail.component.html",
+  styleUrls: ["./mail.component.css"]
 })
 export class MailComponent implements OnInit {
   mailIdList: any[] = [];
@@ -14,6 +14,8 @@ export class MailComponent implements OnInit {
   emailIdList: any = [];
   messageData: any = [];
   filteredList: any = [];
+  googleUser;
+  decodedBodyData: any = [];
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
@@ -29,6 +31,8 @@ export class MailComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 2000));
     this.splitIdsOff();
     this.getEmailContent();
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.decodeData();
   }
 
   splitIdsOff() {
@@ -50,6 +54,7 @@ export class MailComponent implements OnInit {
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
         });
     }
+    return (this.mailService.messageData = messageData);
   }
 
   // showMessageData() {
@@ -58,6 +63,7 @@ export class MailComponent implements OnInit {
   // }
 
   decodeData() {
+    this.mailService.decodedBodyData = this.decodedBodyData;
     this.mailService.decodeData();
   }
   sortingEmails() {
