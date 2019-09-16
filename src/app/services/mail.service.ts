@@ -12,11 +12,11 @@ export class MailService {
   emailData: any = [];
   emailIdList: any = [];
   messageData: any = [];
-  decodedBody: any;
   filteredList: any = [];
   decodedBodyData: any;
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
+  orders: any[] = [];
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
@@ -146,18 +146,53 @@ export class MailService {
       // this.isolateDataAmazon(this.decodedBodyData);
     }
     console.log(this.decodedHTMLData);
+    console.log(this.decodedBodyData);
+    // If sender is Amazon
+    let holder = this.messageData[i].payload.headers;
+    for (let i = 0; i < holder.length; i++) {
+      if (holder[i].name === "From") {
+        if (holder[i].value.includes("amazon.com")) {
+          console.log("The sender is indeed Amazon!");
+          this.isolateDataAmazon(this.decodedBodyData);
+        } // Else if's for other retailers
+      }
+    }
   }
+  // this.isolateDataAmazon(this.decodedBodyData);
 
   isolateDataAmazon(decodedBodyData) {
+    // Builds a new object with with information needed and pushes to order array
+    // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
     // Order # for Amazon are 3 digits followed by 7 followed by 7
-    const orderNum = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(
-      decodedBodyData
+    const retailer = "Amazon";
+    const orderNumReg = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(
+      this.decodedBodyData
     );
-    console.log(`Order # ${orderNum[0]}`);
-  }
-
-  cherryPickingData() {
-    console.log("");
+    const orderNum = orderNumReg[0];
+    const orderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(
+      this.decodedBodyData
+    );
+    const orderTotal = orderTotalReg[0];
+    let estArrivalDate = "";
+    if (/Arriving:/.test(this.decodedBodyData)) {
+      const estArrivalDateReg = /\w+,\s\w+\D\d+/.exec(this.decodedBodyData);
+      estArrivalDate = estArrivalDateReg[0];
+    } else if (/delivery date:/.test(this.decodedBodyData)) {
+      const estArrivalDateReg = /\w+\D\s\w+\s\d+\D\s\d+/.exec(
+        this.decodedBodyData
+      );
+      estArrivalDate = estArrivalDateReg[0];
+    } else {
+      estArrivalDate = "";
+    }
+    const order = {
+      retailer: retailer,
+      orderNum: orderNum,
+      orderTotal: orderTotal,
+      estArrivalDate: estArrivalDate,
+      bodyText: this.decodedBodyData
+    };
+    this.orders.push(order);
   }
 
   // showModal() {

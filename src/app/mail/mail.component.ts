@@ -14,10 +14,10 @@ export class MailComponent implements OnInit {
   emailIdList: any = [];
   messageData: any = [];
   filteredList: any = [];
-  googleUser;
   decodedBodyData: any = [];
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
+  orders: any[];
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
@@ -36,6 +36,7 @@ export class MailComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.decodeData();
     this.decodeHTMLBody();
+    this.getOrdersArray();
   }
 
   splitIdsOff() {
@@ -69,6 +70,11 @@ export class MailComponent implements OnInit {
     this.mailService.decodedBodyData = this.decodedBodyData;
     this.mailService.decodeData();
   }
+
+  getOrdersArray() {
+    this.orders = this.mailService.orders;
+  }
+
   sortingEmails() {
     this.mailService.filteredList = this.filteredList;
     this.mailService.sortingEmails();

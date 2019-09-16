@@ -6,8 +6,13 @@ import { MailComponent } from "./mail/mail.component";
 import { OnboardComponent } from "./onboard/onboard.component";
 import { MailService } from "./services/mail.service";
 import { RouterModule, Routes } from "@angular/router";
+<<<<<<< HEAD
 import { MainComponent } from "./main/main.component";
 import { EmailBodyComponent } from './email-body/email-body.component';
+=======
+import { MainComponent } from './main/main.component';
+
+>>>>>>> master
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/onboard", pathMatch: "full" },

@@ -3,23 +3,6 @@
   <div *ngIf="modalBoolean">Can You See Me</div>
 </div>
 <div class="body">
-  <!-- <button (click)="splitIdsOff()">Split Id's</button>
-  <button (click)="getEmailContent()">Email Content</button>
-  <button (click)="showEmailData()">Show Email Data</button>
-  <button (click)="decodeData()">Decode Data</button>
-  <button (click)="showMessageData()">Message Data</button>
-  <button (click)="sortingEmails()">Sorting Data</button> -->
-
-  <!-- <div class="order" *ngFor="let message of messageData; let i = index">
-    <span class="circle"></span>
-    <div class="text" (click)="showModal()">
-      <p>Retailer: {{ message.payload.headers[13].value }}</p>
-      <p>Order #</p>
-      <p>Order Status</p>
-      <p>Index # of: {{ i }}</p>
-      <div *ngIf="showModal"></div>
-    </div>
-  </div> -->
   <app-email-body
     class="order"
     *ngFor="let message of messageData; index as i"
@@ -27,4 +10,13 @@
     [messageIndex]="i"
     (seeModal)="showModal($event)"
   ></app-email-body>
+  <div class="order" *ngFor="let order of orders">
+    <span class="circle"></span>
+    <div class="text">
+      <p>Retailer: {{ order.retailer }}</p>
+      <p>Order #: {{ order.orderNum }}</p>
+      <p>{{ order.orderTotal }}</p>
+      <p>Est. Delivery Date: {{ order.estArrivalDate }}</p>
+    </div>
+  </div>
 </div>
