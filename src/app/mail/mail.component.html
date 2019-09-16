@@ -6,12 +6,14 @@
   <button (click)="showMessageData()">Message Data</button>
   <button (click)="sortingEmails()">Sorting Data</button> -->
 
-  <div class="order" *ngFor="let message of messageData">
-    <span class="circle"></span>
-    <div class="text">
-      <p>Retailer: {{ message.payload.headers[13].value }}</p>
-      <p>Order #</p>
-      <p>Order Status</p>
-    </div>
+<!-- todo: Needs to reference the new array of objects built from the regex-->
+
+<div class="order" *ngFor="let message of messageData">
+  <span class="circle"></span>
+  <div class="text">
+    <p>Retailer: {{ message.snippet }}</p>
+    <p>Order #</p>
+    <p>Order Status</p>
   </div>
 </div>
+

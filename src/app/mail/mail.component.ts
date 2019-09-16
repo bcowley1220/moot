@@ -39,7 +39,6 @@ export class MailComponent implements OnInit {
     // √ This function takes the emailIdData list and breaks it down into an array of just the ID's in our service
     this.mailService.splitIdsOff(this.emailIdData); // Sends the emailIdData List in as a parameter
     this.emailIdList = this.mailService.emailIdList;
-    // console.log(this.emailIdList);
   }
 
   getEmailContent() {
@@ -52,6 +51,8 @@ export class MailComponent implements OnInit {
         .subscribe(response => {
           messageData.push(response); // Full unedited emails
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
+          console.log(this.messageData);
+
         });
     }
     return (this.mailService.messageData = messageData);
