@@ -1,188 +1,83 @@
-@media only screen and (min-width: 320px){
-  
-  .whole {
-    height: 100vh;
-    width: 100vw;
-  }
-  div {
-    background-color: #b4f8c8;
-  }
-  
-  #first,
-  #second,
-  #third {
-    margin-top: 25px;
-    font-size: 21px;
-    text-align: center;
-    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 2s; /* Firefox < 16 */
-    -ms-animation: fadein 2s; /* Internet Explorer */
-    -o-animation: fadein 2s; /* Opera < 12.1 */
-    animation: fadein 2s;
-    /* -webkit-animation: fadeout 2s; 
-    -moz-animation: fadeout 2s; 
-    -ms-animation: fadeout 2s; 
-    -o-animation: fadeout 2s; 
-    animation: fadeout 2s; */
-  }
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  /* Firefox < 16 */
-  @-moz-keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  /* Safari, Chrome and Opera > 12.1 */
-  @-webkit-keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  /* Internet Explorer */
-  @-ms-keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  /* @keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-moz-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-webkit-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-ms-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  } */
-  img {
-    width: 35%;
-    height: auto;
-    margin: 0px;
-  }
-  p {
-    margin: 15px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bolder;
-    text-align: left;
-    color: #696969;
-    padding: 5px;
-  }
-  .onthree{
-    margin: 15px;
-    /* border-left: 3px solid #69696a; */
-    padding: 15px;
-  }
-  .pthree{
-    margin: 15px;
-    padding: 15px;
-  }
-  .highlight {
-    color: #e54e7f;
-    font-size: 150%;
-    font-weight: bold;
-  }
-  #onboard{
-    width: auto;
-    height: 100vh;
-  }
-  #button{
-    margin: 20px;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: yellow;
-    border: none;
-  }
+.whole {
+  height: 100vh;
+  width: 100vw;
+}
+div {
+  background-color: #b4f8c8;
 }
 
-@media only screen and (min-width: 600px){
-  
-  p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-left: 0;
-    padding: 0;
-  }
-  .onthree{
-    margin: 10px;
-    padding: 0;
-    border-left: 0;
-    padding-bottom: 15px;
-  }
-  .highlight{
-    font-size: 175%;
-  }
-.pthree{
-  font-size: 90%;
-  padding: 0;
+#first,
+#second,
+#third {
+  margin-top: 25px;
+  font-size: 21px;
+  text-align: center;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
 }
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-@media only screen and (min-width: 1024px){
-  img{
-    width: 25%;
-    height: auto;
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
   }
-  p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-left: 0;
-    padding: 0;
+  to {
+    opacity: 1;
   }
-  .onthree{
-    margin: 10px;
-    padding: 0;
-    border-left: 0;
-    padding-bottom: 15px;
+}
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
   }
-  .highlight{
-    font-size: 175%;
+  to {
+    opacity: 1;
   }
-  .pthree{
-    font-size: 90%;
-    padding: 0;
+}
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+/* #second{
+    animation: 2s;
+}
+#third{
+    animation: 2s;
+} */
+img {
+  width: 25%;
+  height: auto;
+  margin: 0px;
+}
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: left;
+
+  color: white;
+  padding: 5px;
+
+}
+.highlight {
+  color: #e54e7f;
+  font-size: 50px;
+}
+#onboard{
+  width: auto;
+  height: 100vh;
 }
