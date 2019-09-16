@@ -1,3 +1,7 @@
+<div>
+  <button (click)="showModal()">Show Boolean</button>
+  <div *ngIf="modalBoolean">Can You See Me</div>
+</div>
 <div class="body">
   <!-- <button (click)="splitIdsOff()">Split Id's</button>
   <button (click)="getEmailContent()">Email Content</button>
@@ -6,14 +10,21 @@
   <button (click)="showMessageData()">Message Data</button>
   <button (click)="sortingEmails()">Sorting Data</button> -->
 
-<!-- todo: Needs to reference the new array of objects built from the regex-->
-
-<div class="order" *ngFor="let message of messageData">
-  <span class="circle"></span>
-  <div class="text">
-    <p>Retailer: {{ message.snippet }}</p>
-    <p>Order #</p>
-    <p>Order Status</p>
-  </div>
+  <!-- <div class="order" *ngFor="let message of messageData; let i = index">
+    <span class="circle"></span>
+    <div class="text" (click)="showModal()">
+      <p>Retailer: {{ message.payload.headers[13].value }}</p>
+      <p>Order #</p>
+      <p>Order Status</p>
+      <p>Index # of: {{ i }}</p>
+      <div *ngIf="showModal"></div>
+    </div>
+  </div> -->
+  <app-email-body
+    class="order"
+    *ngFor="let message of messageData; index as i"
+    [message]="message"
+    [messageIndex]="i"
+    (seeModal)="showModal($event)"
+  ></app-email-body>
 </div>
-

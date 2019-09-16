@@ -15,6 +15,8 @@ export class MailService {
   decodedBody: any;
   filteredList: any = [];
   decodedBodyData: any;
+  decodedHTMLData: any = [];
+  modalBoolean: boolean = false;
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
@@ -69,8 +71,8 @@ export class MailService {
   }
 
   async getAccessToken() {
-    console.log('Async getAccess Token is working');
-    (window as any).onSignIn = (googleUser) => {
+    console.log("Async getAccess Token is working");
+    (window as any).onSignIn = googleUser => {
       console.log("onSignIn function working");
       this.accessToken = googleUser.getAuthResponse(true).access_token;
       // const element = document.getElementById("app-root");
@@ -81,35 +83,85 @@ export class MailService {
   }
 
   decodeData() {
-    console.log(this.messageData);
+    // console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
       if (this.messageData[i].payload.parts[0].body.size !== 0) {
-        this.decodedBodyData =
-          atob(
-            this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
-          );
-    } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
-        this.decodedBodyData =
-          atob(
-            this.messageData[i].payload.parts[0].parts[0].body.data.replace(
-              /\_/g,
-              "/"
-            )
+        this.decodedBodyData = atob(
+          this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
+        );
+      } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
+        this.decodedBodyData = atob(
+          this.messageData[i].payload.parts[0].parts[0].body.data.replace(
+            /\_/g,
+            "/"
+          )
         );
       }
       console.log(this.decodedBodyData);
-      this.isolateDataAmazon(this.decodedBodyData);
+      // this.isolateDataAmazon(this.decodedBodyData);
     }
+  }
+
+  // .replace(/-/g, '+').replace(/_/g, '/')
+  decodeHTMLBody() {
+    console.log(this.messageData);
+    for (let i = 0; i < this.messageData.length; i++) {
+      if (this.messageData[i].payload.parts[0].body.size !== 0) {
+        this.decodedHTMLData.push(
+          atob(
+            this.messageData[i].payload.parts[1].body.data
+              .replace(/\_/g, "/")
+              .replace(/-/g, "+")
+            // this.messageData[i].payload.parts[1].body.data
+            //     .replace(/-/g, "+")
+            //     .replace(/_/g, "/")
+          )
+        );
+        // } else if (this.messageData[i].payload.parts[1].parts[0].body.size != 0) {
+        //   this.decodedHTMLData.push(
+        //     atob(
+        //       this.messageData[i].payload.parts[0].parts[1].body.data
+        //         .replace(/\_/g, "/")
+        //         .replace(/-/g, "+")
+        //       // )
+        //       // this.messageData[i].payload.parts[0].parts[1].body.data
+        //       //     .replace(/-/g, "+")
+        //       //     .replace(/_/g, "/")
+        //     )
+        //   );
+      } else {
+        this.decodedHTMLData.push(
+          atob(
+            this.messageData[i].payload.parts[0].parts[1].body.data
+              .replace(/\_/g, "/")
+              .replace(/-/g, "+")
+            // )
+            // this.messageData[i].payload.parts[0].parts[1].body.data
+            //     .replace(/-/g, "+")
+            //     .replace(/_/g, "/")
+          )
+        );
+      }
+
+      // this.isolateDataAmazon(this.decodedBodyData);
+    }
+    console.log(this.decodedHTMLData);
   }
 
   isolateDataAmazon(decodedBodyData) {
     // Order # for Amazon are 3 digits followed by 7 followed by 7
-    const orderNum = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(decodedBodyData);
+    const orderNum = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(
+      decodedBodyData
+    );
     console.log(`Order # ${orderNum[0]}`);
-
   }
 
   cherryPickingData() {
     console.log("");
   }
+
+  // showModal() {
+  //   // console.log(`You have clicked the index of ${{ index }} `);
+  //   this.modalBoolean = !this.modalBoolean;
+  // }
 }

@@ -16,6 +16,8 @@ export class MailComponent implements OnInit {
   filteredList: any = [];
   googleUser;
   decodedBodyData: any = [];
+  decodedHTMLData: any = [];
+  modalBoolean: boolean = false;
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
@@ -33,6 +35,7 @@ export class MailComponent implements OnInit {
     this.getEmailContent();
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.decodeData();
+    this.decodeHTMLBody();
   }
 
   splitIdsOff() {
@@ -52,7 +55,6 @@ export class MailComponent implements OnInit {
           messageData.push(response); // Full unedited emails
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
           console.log(this.messageData);
-
         });
     }
     return (this.mailService.messageData = messageData);
@@ -70,5 +72,14 @@ export class MailComponent implements OnInit {
   sortingEmails() {
     this.mailService.filteredList = this.filteredList;
     this.mailService.sortingEmails();
+  }
+  decodeHTMLBody() {
+    this.mailService.decodedHTMLData = this.decodedHTMLData;
+    this.mailService.decodeHTMLBody();
+  }
+
+  showModal() {
+    console.log("modalClick is working");
+    this.modalBoolean = !this.modalBoolean;
   }
 }
