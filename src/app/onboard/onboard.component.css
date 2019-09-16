@@ -1,13 +1,8 @@
 @media only screen and (min-width: 320px){
-  
   .whole {
     height: 100vh;
     width: 100vw;
   }
-  div {
-    background-color: #b4f8c8;
-  }
-  
   #first,
   #second,
   #third {
@@ -19,11 +14,6 @@
     -ms-animation: fadein 2s; /* Internet Explorer */
     -o-animation: fadein 2s; /* Opera < 12.1 */
     animation: fadein 2s;
-    /* -webkit-animation: fadeout 2s; 
-    -moz-animation: fadeout 2s; 
-    -ms-animation: fadeout 2s; 
-    -o-animation: fadeout 2s; 
-    animation: fadeout 2s; */
   }
   @keyframes fadein {
     from {
@@ -60,41 +50,6 @@
       opacity: 1;
     }
   }
-  /* @keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-moz-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-webkit-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @-ms-keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  } */
   img {
     width: 35%;
     height: auto;
@@ -134,9 +89,7 @@
     border: none;
   }
 }
-
 @media only screen and (min-width: 600px){
-  
   p {
     display: flex;
     justify-content: center;
@@ -154,10 +107,10 @@
   .highlight{
     font-size: 175%;
   }
-.pthree{
-  font-size: 90%;
-  padding: 0;
-}
+  .pthree{
+    font-size: 90%;
+    padding: 0;
+  }
 }
 @media only screen and (min-width: 1024px){
   img{
