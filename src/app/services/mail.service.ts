@@ -100,4 +100,8 @@ export class MailService {
     }
     // console.log(this.decodedBodyData);
   }
+
+  cherryPickingData() {
+    console.log("");
+  }
 }
