@@ -8,12 +8,13 @@
 
 <!-- todo: Needs to reference the new array of objects built from the regex-->
 
-<div class="order" *ngFor="let message of messageData">
+<div class="order" *ngFor="let order of orders">
   <span class="circle"></span>
   <div class="text">
-    <p>Retailer: {{ message.snippet }}</p>
-    <p>Order #</p>
-    <p>Order Status</p>
+    <p>Retailer: {{ order.retailer }}</p>
+    <p>Order #: {{ order.orderNum }}</p>
+    <p>{{ order.orderTotal }}</p>
+    <p>Est. Delivery Date: {{ order.estArrivalDate }}</p>
   </div>
 </div>
 
