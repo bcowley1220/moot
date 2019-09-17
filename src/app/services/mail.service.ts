@@ -23,7 +23,7 @@ export class MailService {
   }
 
   getAmazonEmailIdCall(): Observable<any> {
-    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // Called from mail component: getAmazonEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
@@ -36,7 +36,7 @@ export class MailService {
   }
 
   getTargetEmailIdCall(): Observable<any> {
-    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // Called from mail component: getTargetEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
@@ -47,12 +47,6 @@ export class MailService {
       }
     );
   }
-
-  // concatArrays() {
-  //   this.emailIdData = this.amazonIdData.concat(this.targetIdData);
-  //   console.log(this.emailIdData);
-  //   return this.emailIdData;
-  // }
 
   splitIdsOff(emailData) {
     // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
