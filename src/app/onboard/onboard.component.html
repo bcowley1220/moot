@@ -1,43 +1,42 @@
 
 <div>
-  <div *ngIf="!showBoard">
+  <div class="whole" id="first" *ngIf="showFirst" (click)="toggleOnboardTwo()">
+    <img id="logo" src="assets/mootLogo.gif" alt="logo" />
+  </div>
+  <div
+    class="whole"
+    id="second"
+    *ngIf="showSecond"
+    (click)="toggleOnboardThree()"
+  >
+    <img id="onboard" src="assets/onboard2.png" alt="handshake agreement" />
+  </div>
+  <!-- <p class="highlight" id="hello">hello.</p>
+    <p>welcome to</p>
+    <p class="highlight">moot</p>
+    <p>
+      an application to<br />
+      manage <br />
+      online <br />
+      orders & <br />
+      tracking <br />
 
-    <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
-      <img id="logo" src="assets/mootLogo.gif" alt="logo" />
+    </p> -->
 
-    </div>
-    <div
-      class="whole"
-      id="second"
-      *ngIf="showSecond"
-      (click)="togglePageTwo()"
-    >
-      
-    <p class="highlight" id="hello">hello.</p>
-      <p>welcome to</p>
-      <p class="highlight">moot</p>
-      <p>an application to</p>
-        <p>
-        <span class="highlight">m</span>anage <br />
-        <span class="highlight">o</span>nline <br />
-        <span class="highlight">o</span>rders & <br />
-        <span class="highlight">t</span>racking <br />
-        </p>
-    </div>
-    <div class="whole" id="third" *ngIf="showThird">
-      <img src="assets/handshake1.png" alt="handshake agreement" />
+  <div class="whole" id="third" *ngIf="showThird">
+    <img src="assets/handshake1.png" alt="handshake agreement" />
 
-      <p class="onthree">
-        Sign in with your Gmail account and we
-        can streamline and organize
-        your orders
-        being shipped
-      </p>
-      <button id="button" *ngIf="!showBoard" (click)="goToMail()">
-        Start App
-      </button>
-      <p class="pthree">*We do not store any of your information*</p>
-    </div>
+    <p>
+      We've partnered with Google <br />
+      to streamline and organize<br />
+      the shipments<br />
+      coming your way
 
+    </p>
+    <button id="button" *ngIf="!showBoard" (click)="goToMain()">
+
+      Start App
+    </button>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
   </div>
 </div>
