@@ -23,7 +23,6 @@ export class MailComponent implements OnInit {
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
   async ngOnInit() {
-    // Jank, wait for page to boot
     await new Promise(resolve => setTimeout(resolve, 2000));
     await this.mailService.getAmazonEmailIdCall().subscribe(response => {
       const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
