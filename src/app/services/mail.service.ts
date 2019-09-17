@@ -102,28 +102,8 @@ export class MailService {
     };
   }
 
-  decodeData() {
-    // console.log(this.messageData);
-    for (let i = 0; i < this.messageData.length; i++) {
-      if (this.messageData[i].payload.parts[0].body.size !== 0) {
-        this.decodedBodyData = atob(
-          this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
-        );
-      } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
-        this.decodedBodyData = atob(
-          this.messageData[i].payload.parts[0].parts[0].body.data.replace(
-            /\_/g,
-            "/"
-          )
-        );
-      }
-      console.log(this.decodedBodyData);
-      // this.isolateDataAmazon(this.decodedBodyData);
-    }
-  }
-
   // .replace(/-/g, '+').replace(/_/g, '/')
-  decodeHTMLBody() {
+  decodeData() {
     console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
       if (this.messageData[i].payload.body.size != 0) {
@@ -152,7 +132,7 @@ export class MailService {
         if (holder[i].name === "From") {
           if (holder[i].value.includes("amazon.com")) {
             console.log("The sender is indeed Amazon!");
-            this.isolateDataAmazon(this.decodedBodyData);
+            this.isolateDataAmazon(this.decodedBodyData, message);
           } else if (holder[i].value.includes("target.com")) {
             console.log("The sender is indeed Target!");
             this.isolateDataTarget(this.decodedBodyData, message);
@@ -163,7 +143,7 @@ export class MailService {
   }
   // this.isolateDataAmazon(this.decodedBodyData);
 
-  isolateDataAmazon(decodedBodyData) {
+  isolateDataAmazon(decodedBodyData, messageData) {
     // Builds a new object with with information needed and pushes to order array
     // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
     // Order # for Amazon are 3 digits followed by 7 followed by 7
@@ -192,7 +172,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: decodedBodyData
+      bodyText: decodedBodyData,
+      snippet: messageData.snippet
     };
     this.orders.push(order);
   }

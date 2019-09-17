@@ -20,7 +20,8 @@ export class MailComponent implements OnInit {
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
   orders: any[];
-  modalBoolean: boolean = false;
+  arrayLocation: any;
+
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
@@ -45,7 +46,7 @@ export class MailComponent implements OnInit {
     this.getEmailContent();
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.decodeData();
-    this.decodeHTMLBody();
+    // this.decodeHTMLBody();
     this.getOrdersArray();
   }
 
@@ -105,5 +106,7 @@ export class MailComponent implements OnInit {
   showModal(i) {
     console.log(i);
     this.modalBoolean = !this.modalBoolean;
+    let arrayLocation = this.orders[i];
+    return (this.arrayLocation = arrayLocation);
   }
 }
