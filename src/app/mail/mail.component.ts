@@ -28,11 +28,15 @@ export class MailComponent implements OnInit {
       const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
       console.log(amazonIdData);
       return (this.amazonIdData = amazonIdData);
+    }, error => {
+      return this.amazonIdData = [];
     }); // List of 100 message ID's, threadID's and a next page token
     await this.mailService.getTargetEmailIdCall().subscribe(response => {
       const targetIdData = response.messages;
       console.log(targetIdData);
       return (this.targetIdData = targetIdData);
+    }, error => {
+      return this.targetIdData = [];
     });
     // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
