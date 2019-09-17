@@ -1,10 +1,14 @@
-nav-bar {
+nav {
   position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
 }
 img {
   width: 100%;
 }
 app-mail {
   position: relative;
-  bottom: 475px;
+  bottom: 425px;
+  z-index: 2;
 }

@@ -1,4 +1,3 @@
-
 <div>
   <div class="whole" id="first" *ngIf="showFirst" (click)="toggleOnboardTwo()">
     <img id="logo" src="assets/mootLogo.gif" alt="logo" />
@@ -9,7 +8,11 @@
     *ngIf="showSecond"
     (click)="toggleOnboardThree()"
   >
-    <img id="onboard" src="assets/onboard2.png" alt="handshake agreement" />
+    <img
+      id="onboard"
+      src="../../assets/onboard2.gif"
+      alt="handshake agreement"
+    />
   </div>
   <!-- <p class="highlight" id="hello">hello.</p>
     <p>welcome to</p>
@@ -31,10 +34,8 @@
       to streamline and organize<br />
       the shipments<br />
       coming your way
-
     </p>
     <button id="button" *ngIf="!showBoard" (click)="goToMain()">
-
       Start App
     </button>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
