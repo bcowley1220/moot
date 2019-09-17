@@ -18,17 +18,17 @@ export class MailComponent implements OnInit {
   filteredList: any = [];
   decodedBodyData: any = [];
   orders: any[];
+  modalBoolean: boolean = false;
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
   async ngOnInit() {
-    // Jank, wait for page to boot
     await new Promise(resolve => setTimeout(resolve, 2000));
     await this.mailService.getAmazonEmailIdCall().subscribe(response => {
       const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
       console.log(amazonIdData);
       return (this.amazonIdData = amazonIdData);
-      }); // List of 100 message ID's, threadID's and a next page token
+    }); // List of 100 message ID's, threadID's and a next page token
     await this.mailService.getTargetEmailIdCall().subscribe(response => {
       const targetIdData = response.messages;
       console.log(targetIdData);
@@ -67,7 +67,6 @@ export class MailComponent implements OnInit {
           messageData.push(response); // Full unedited emails
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
           console.log(this.messageData);
-
         });
     }
     return (this.mailService.messageData = messageData);
@@ -95,9 +94,13 @@ export class MailComponent implements OnInit {
   getImage(retailer) {
     switch (retailer) {
       case "Amazon":
-        return 'url(../assets/amazon-logo.svg)';
+        return "url(../assets/amazon-logo.svg)";
       case "Target":
-        return 'url(../assets/target-logo.svg)';
+        return "url(../assets/target-logo.svg)";
     }
+  }
+  showModal(i) {
+    console.log(i);
+    this.modalBoolean = !this.modalBoolean;
   }
 }
