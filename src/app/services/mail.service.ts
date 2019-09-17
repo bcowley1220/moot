@@ -22,7 +22,7 @@ export class MailService {
     this.router.navigate(["main"]);
   }
 
-  getEmailIdCall(): Observable<any> {
+  getAmazonEmailIdCall(): Observable<any> {
     // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
@@ -33,6 +33,24 @@ export class MailService {
         headers: { Authorization: "Bearer " + this.accessToken }
       });
   }
+
+  getTargetEmailIdCall(): Observable<any> {
+    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // access token to make an API call
+    // with the query params and the Bearer headers.  This returns a list of email ID's.
+    // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
+    return this.http.get(
+      'https://www.googleapis.com/gmail/v1/users/me/messages?q={ from:target subject:"here%27s your order #" }',
+      {
+        headers: { Authorization: "Bearer " + this.accessToken }
+      });
+  }
+
+  // concatArrays() {
+  //   this.emailIdData = this.amazonIdData.concat(this.targetIdData);
+  //   console.log(this.emailIdData);
+  //   return this.emailIdData;
+  // }
 
   splitIdsOff(emailData) {
     // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
@@ -83,7 +101,12 @@ export class MailService {
   decodeData() {
     console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
-      if (this.messageData[i].payload.parts[0].body.size !== 0) {
+      if (this.messageData[i].payload.body.size != 0) {
+        this.decodedBodyData =
+          atob(
+            this.messageData[i].payload.body.data.replace(/\-/g, '+').replace(/\_/g, '/')
+          );
+      } else if (this.messageData[i].payload.parts[0].body.size != 0) {
         this.decodedBodyData =
           atob(
             this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
@@ -97,15 +120,19 @@ export class MailService {
             )
         );
       }
-      console.log(this.decodedBodyData);
+      // console.log(this.decodedBodyData);
       // If sender is Amazon
       let holder = this.messageData[i].payload.headers;
+      let message = this.messageData[i];
       for (let i = 0; i < holder.length; i++) {
         if (holder[i].name === "From") {
           if (holder[i].value.includes("amazon.com")) {
             console.log('The sender is indeed Amazon!');
             this.isolateDataAmazon(this.decodedBodyData);
-          } // Else if's for other retailers
+          } else if (holder[i].value.includes("target.com")) {
+            console.log('The sender is indeed Target!');
+            this.isolateDataTarget(this.decodedBodyData, message);
+          }// Else if's for other retailers
         }
       }
     }
@@ -119,7 +146,8 @@ export class MailService {
     const retailer = 'Amazon';
     const orderNumReg = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(decodedBodyData);
     const orderNum = orderNumReg[0];
-    const orderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(decodedBodyData);
+    const getOrderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(decodedBodyData);
+    const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
     const orderTotal = orderTotalReg[0];
     let estArrivalDate = '';
     if (/Arriving:/.test(decodedBodyData)) {
@@ -131,6 +159,26 @@ export class MailService {
     } else {
       estArrivalDate = '';
     }
+    const order = {
+      retailer: retailer,
+      orderNum: orderNum,
+      orderTotal: orderTotal,
+      estArrivalDate: estArrivalDate,
+      bodyText: decodedBodyData
+    };
+    this.orders.push(order);
+  }
+
+  isolateDataTarget(decodedBodyData, messageData) {
+    const retailer = 'Target';
+    const orderNumReg = /\d\d\d\d\d\d\d\d\d\d\d\d\d/.exec(messageData.snippet);
+    const orderNum = orderNumReg[0];
+    const getOrderTotalReg = /class="summary-text"\salign="right">\D\d+\D\d+</.exec(decodedBodyData);
+    const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
+    const orderTotal = orderTotalReg[0];
+    const getEstArrivalDateReg = /class="product-deliv-date">\sarriving\sby\s\w+,\s\w+\s\d+/.exec(decodedBodyData);
+    const estArrivalDateReg = /\w+,\s\w+\s\d+/.exec(getEstArrivalDateReg[0]);
+    const estArrivalDate = estArrivalDateReg[0];
     const order = {
       retailer: retailer,
       orderNum: orderNum,
