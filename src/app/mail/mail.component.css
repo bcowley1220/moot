@@ -1,55 +1,117 @@
 .order {
   border: 1.5px solid hotpink;
   border-radius: 20px;
-  height: 120px;
-  width: 90%;
-  margin: 30px;
+  width: 95%;
   background: white;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  height: 120px;
+  margin: 7px;
   position: relative;
-  /* flex-direction: column; */
+  padding: 3px;
+  box-shadow: 0px 3px 6px #000000;
 }
 .circle {
-  border: 1px solid hotpink;
+  border: 1.5px solid #6dfc98;
   border-radius: 50%;
-  min-height: 100px;
-  min-width: 100px;
-  margin: 15px;
-  /* display: inline-block; */
+  margin: 10px;
   background-position: center;
   background-size: 90px;
   background-repeat: no-repeat;
 }
 .text {
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
   padding: 5px;
 }
-
 .retailer_info {
   font-weight: bold;
   position: absolute;
   left: 20%;
   top: 0;
 }
-
 .order_num {
   position: absolute;
   left: 20%;
   top: 20%;
   color: gray;
 }
-
 .order_total {
   position: absolute;
   top: 0;
   right: 5%;
 }
-
 .est_del_info {
   position: absolute;
   bottom: 0;
   left: 20%;
+}
+@media only screen and (min-width: 320px) and (max-width: 449px){ 
+  .circle {
+    min-height: 45px;
+    min-width: 45px;
+    margin: 5px;
+  }
+  .text{
+    font-size: 85%;
+  }
+}
+@media only screen and (min-width: 450px) and (max-width: 599px){ 
+  .circle {
+    min-height: 75px;
+    min-width: 75px;
+    margin: 5px;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 1023px){
+  .circle {
+    min-height: 90px;
+    min-width: 90px;
+  }
+}
+@media only screen and (min-width: 1024px){
+  .circle {
+    min-height: 50px;
+    min-width: 50px;
+    margin: 6px;
+    position: relative;
+    transform: translateX(-36px) translateY(-115px);
+  }
+  .body{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-items: center;
+    grid-column-gap: 20px;
+  }
+  .order{
+
+
+    overflow: visible;
+    height: 240px;
+    width: 240px;
+    margin: 15px;
+  }
+  .text{
+    font-size: 100%;
+  }
+  .retailer_info {
+    font-size: 125%;
+    left: 12%;
+  }
+  .order_num {
+    font-size: 110%;
+    top: 28%;
+    left: 12%;
+  }
+  .order_total {
+    top: 15%;
+    left: 12%;
+  }
+  .est_del_info {
+    left: 12%;
+  }
 }
 
 .modal {
@@ -60,3 +122,4 @@
   height: 80vh;
   background-color: white;
 }
+
