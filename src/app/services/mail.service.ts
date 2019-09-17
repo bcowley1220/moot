@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
-
 @Injectable({
   providedIn: "root"
 })
@@ -13,8 +12,9 @@ export class MailService {
   emailData: any = [];
   emailIdList: any = [];
   messageData: any = [];
-  decodedBody: any;
   filteredList: any = [];
+  decodedBodyData: any;
+  orders: any[] = [];
   constructor(private http: HttpClient, private router: Router) {}
 
   navigateToMain() {
@@ -25,11 +25,6 @@ export class MailService {
     // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
-    const accessToken = document
-      .getElementById("app-root")
-      .getAttribute("data-access_token");
-    console.log("got access_token", accessToken);
-    this.accessToken = accessToken;
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
     return this.http.get(
       'https://www.googleapis.com/gmail/v1/users/me/messages?q={ "Amazon Order Confirmation" }',
@@ -44,6 +39,7 @@ export class MailService {
     for (let i = 0; i < emailData.length; i++) {
       this.emailIdList.push(emailData[i].id);
     }
+    console.log(this.emailIdList);
     return this.emailIdList;
   }
 
@@ -58,19 +54,13 @@ export class MailService {
 
   // todo: NOT SURE IF ACTUALLY NEEDED ANYMORE NOW THAT WE ARE QUERYING OUR GET LIST
   sortingEmails() {
-    // console.log("sortingbutton works");
     for (let i = 0; i < this.messageData.length; i++) {
-      let holder = this.messageData[i].payload.headers;
-      // console.log(holder);
-      // holder = Object.values(holder.payload.headers[i]);
-      // console.log(holder);
+      const holder = this.messageData[i].payload.headers;
       for (let i = 0; i < holder.length; i++) {
-        // console.log(holder[i].name);
         if (holder[i].name == "Subject") {
           // console.log(holder[i].value);
-          if (holder[i].value.includes("Order")) {
+          if (holder[i].value.includes("Amazon Order Confirmation")) {
             this.filteredList.push(this.messageData[i]);
-            // console.log(this.messageData[i]);
           }
         }
       }
@@ -78,28 +68,76 @@ export class MailService {
     console.log(this.filteredList);
   }
 
-  // showEmailData() {
-  //   console.log(this.emailData);
-  // }
-  //
-  // showMessageData() {
-  //   console.dir(this.messageData);
-  // }
-
+  async getAccessToken() {
+    console.log('Async getAccess Token is working');
+    (window as any).onSignIn = (googleUser) => {
+      console.log("onSignIn function working");
+      this.accessToken = googleUser.getAuthResponse(true).access_token;
+      // const element = document.getElementById("app-root");
+      // this.accessToken = access_token;
+      console.log(this.accessToken);
+      // element.setAttribute('data-access_token', access_token);
+    };
+  }
 
   decodeData() {
-    const bodyData = this.messageData[0].payload.parts[0].body.data;
-    console.log(atob(bodyData));
-    this.decodedBody = bodyData;
-    // this.encodedBody = JSON.stringify(this.messageData[0].payload.body.data)
-    //   .replace(/-/g, "+")
-    //   .replace(/_/g, "/");
-    // console.log(this.encodedBody);
-    // this.encodedBody.replace(/-/g, "+").replace(/_/g, "/");
-    // .replace(/\s/g, "");
-    // console.log(decodeURIComponent(escape(window.atob(this.encodedBody))));
-    // console.log(window.atob(this.encodedBody));
-    // console.log(atob(this.encodedBody.replace(/-/g, "+").replace(/_/g, "/")));
+    console.log(this.messageData);
+    for (let i = 0; i < this.messageData.length; i++) {
+      if (this.messageData[i].payload.parts[0].body.size !== 0) {
+        this.decodedBodyData =
+          atob(
+            this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
+          );
+    } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
+        this.decodedBodyData =
+          atob(
+            this.messageData[i].payload.parts[0].parts[0].body.data.replace(
+              /\_/g,
+              "/"
+            )
+        );
+      }
+      console.log(this.decodedBodyData);
+      // If sender is Amazon
+      let holder = this.messageData[i].payload.headers;
+      for (let i = 0; i < holder.length; i++) {
+        if (holder[i].name === "From") {
+          if (holder[i].value.includes("amazon.com")) {
+            console.log('The sender is indeed Amazon!');
+            this.isolateDataAmazon(this.decodedBodyData);
+          } // Else if's for other retailers
+        }
+      }
+    }
+    // this.isolateDataAmazon(this.decodedBodyData);
   }
-  // !Set Up Return Methods For Variables
+
+  isolateDataAmazon(decodedBodyData) {
+    // Builds a new object with with information needed and pushes to order array
+    // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
+    // Order # for Amazon are 3 digits followed by 7 followed by 7
+    const retailer = 'Amazon';
+    const orderNumReg = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(decodedBodyData);
+    const orderNum = orderNumReg[0];
+    const orderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(decodedBodyData);
+    const orderTotal = orderTotalReg[0];
+    let estArrivalDate = '';
+    if (/Arriving:/.test(decodedBodyData)) {
+      const estArrivalDateReg = /\w+,\s\w+\D\d+/.exec(decodedBodyData);
+      estArrivalDate = estArrivalDateReg[0];
+    } else if (/delivery date:/.test(decodedBodyData)) {
+      const estArrivalDateReg = /\w+\D\s\w+\s\d+\D\s\d+/.exec(decodedBodyData);
+      estArrivalDate = estArrivalDateReg[0];
+    } else {
+      estArrivalDate = '';
+    }
+    const order = {
+      retailer: retailer,
+      orderNum: orderNum,
+      orderTotal: orderTotal,
+      estArrivalDate: estArrivalDate,
+      bodyText: decodedBodyData
+    };
+    this.orders.push(order);
+  }
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MailService } from '../services/mail.service';
+import { Component, OnInit, ElementRef } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { MailService } from "../services/mail.service";
 @Component({
-  selector: 'app-mail',
-  templateUrl: './mail.component.html',
-  styleUrls: ['./mail.component.css']
+  selector: "app-mail",
+  templateUrl: "./mail.component.html",
+  styleUrls: ["./mail.component.css"]
 })
 export class MailComponent implements OnInit {
   mailIdList: any[] = [];
@@ -14,6 +14,8 @@ export class MailComponent implements OnInit {
   emailIdList: any = [];
   messageData: any = [];
   filteredList: any = [];
+  decodedBodyData: any = [];
+  orders: any[];
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
@@ -29,13 +31,15 @@ export class MailComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 2000));
     this.splitIdsOff();
     this.getEmailContent();
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.decodeData();
+    this.getOrdersArray();
   }
 
   splitIdsOff() {
     // √ This function takes the emailIdData list and breaks it down into an array of just the ID's in our service
     this.mailService.splitIdsOff(this.emailIdData); // Sends the emailIdData List in as a parameter
     this.emailIdList = this.mailService.emailIdList;
-    // console.log(this.emailIdList);
   }
 
   getEmailContent() {
@@ -48,8 +52,11 @@ export class MailComponent implements OnInit {
         .subscribe(response => {
           messageData.push(response); // Full unedited emails
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
+          console.log(this.messageData);
+
         });
     }
+    return (this.mailService.messageData = messageData);
   }
 
   // showMessageData() {
@@ -58,8 +65,14 @@ export class MailComponent implements OnInit {
   // }
 
   decodeData() {
+    this.mailService.decodedBodyData = this.decodedBodyData;
     this.mailService.decodeData();
   }
+
+  getOrdersArray() {
+    this.orders = this.mailService.orders;
+  }
+
   sortingEmails() {
     this.mailService.filteredList = this.filteredList;
     this.mailService.sortingEmails();
