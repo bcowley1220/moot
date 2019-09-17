@@ -10,6 +10,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { EmailBodyComponent } from "./email-body/email-body.component";
 
 import { MainComponent } from "./main/main.component";
+import { OrderModalComponent } from "./order-modal/order-modal.component";
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/onboard", pathMatch: "full" },
@@ -22,7 +23,7 @@ const appRoutes: Routes = [
     MailComponent,
     OnboardComponent,
     MainComponent,
-    EmailBodyComponent
+    OrderModalComponent
   ],
   imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
   providers: [MailService],

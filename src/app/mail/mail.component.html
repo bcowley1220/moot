@@ -1,22 +1,39 @@
-<div>
-  <button (click)="showModal()">Show Boolean</button>
-  <div *ngIf="modalBoolean">Can You See Me</div>
-</div>
-<div class="body">
-  <app-email-body
-    class="order"
-    *ngFor="let message of messageData; index as i"
-    [message]="message"
-    [messageIndex]="i"
-    (seeModal)="showModal($event)"
-  ></app-email-body>
-  <div class="order" *ngFor="let order of orders">
-    <span class="circle"></span>
-    <div class="text">
-      <p>Retailer: {{ order.retailer }}</p>
-      <p>Order #: {{ order.orderNum }}</p>
-      <p>{{ order.orderTotal }}</p>
-      <p>Est. Delivery Date: {{ order.estArrivalDate }}</p>
-    </div>
+<!-- References the orders array build from parsed data from emails-->
+
+<div
+  class="order"
+  *ngFor="let order of orders; let i = index"
+  (click)="showModal(i)"
+>
+  <span
+    class="circle"
+    [style.background]="getImage(order.retailer)"
+    [style.background-repeat]="'no-repeat'"
+    [style.background-size]="'90px'"
+    [style.background-position]="'center'"
+  ></span>
+  <div class="text">
+    <p class="retailer_info">{{ order.retailer }}</p>
+    <p class="order_num">Order #{{ order.orderNum }}</p>
+    <p class="order_total">{{ order.orderTotal }}</p>
+    <p class="est_del_info">Est. Delivery Date: {{ order.estArrivalDate }}</p>
+  </div>
+  <div *ngIf="modalBoolean" class="modal">
+    {{ i }}
+    <span
+      class="circle"
+      [style.background]="getImage(order.retailer)"
+      [style.background-repeat]="'no-repeat'"
+      [style.background-size]="'90px'"
+      [style.background-position]="'center'"
+    ></span>
+    <p>{{ order.retailer }}</p>
+    <p>Order #{{ order.orderNum }}</p>
+    <p>{{ order.orderTotal }}</p>
+    <p>Est. Delivery Date: {{ order.estArrivalDate }}</p>
+    <p>
+      {{ order.snippet }}
+    </p>
+    <button>X</button>
   </div>
 </div>
