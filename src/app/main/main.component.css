@@ -1,0 +1,10 @@
+nav-bar {
+  position: fixed;
+}
+img {
+  width: 100%;
+}
+app-mail {
+  position: relative;
+  bottom: 475px;
+}
