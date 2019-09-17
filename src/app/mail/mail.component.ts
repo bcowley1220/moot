@@ -23,10 +23,11 @@ export class MailComponent implements OnInit {
     // Jank, wait for page to boot
     await new Promise(resolve => setTimeout(resolve, 2000));
     await this.mailService.getEmailIdCall().subscribe(response => {
-      console.log(response);
-      const emailIdData = response.messages; // List of 100 message ID's, threadID's and a next page token
-      return (this.emailIdData = emailIdData); // Sets local variable emailIdData equal to the list of Id's
-    });
+      const emailIdData = response.messages; //Sets Amazon response equal to emailID array
+      console.log(emailIdData);
+      return (this.emailIdData = emailIdData);
+      }); // List of 100 message ID's, threadID's and a next page token
+    // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
     await new Promise(resolve => setTimeout(resolve, 2000));
     this.splitIdsOff();
@@ -76,5 +77,12 @@ export class MailComponent implements OnInit {
   sortingEmails() {
     this.mailService.filteredList = this.filteredList;
     this.mailService.sortingEmails();
+  }
+
+  getImage(retailer) {
+    switch (retailer) {
+      case "Amazon":
+        return 'url(../assets/amazon-logo.svg)';
+    }
   }
 }
