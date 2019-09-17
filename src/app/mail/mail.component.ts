@@ -78,4 +78,11 @@ export class MailComponent implements OnInit {
     this.mailService.filteredList = this.filteredList;
     this.mailService.sortingEmails();
   }
+
+  getImage(retailer) {
+    switch (retailer) {
+      case "Amazon":
+        return 'url(../assets/amazon-logo.svg)';
+    }
+  }
 }

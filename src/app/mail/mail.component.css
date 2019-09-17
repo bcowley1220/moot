@@ -1,24 +1,54 @@
 .order {
   border: 1.5px solid hotpink;
   border-radius: 20px;
-  height: 100px;
-  width: 80%;
+  height: 120px;
+  width: 90%;
   margin: 30px;
   background: white;
   display: flex;
   align-items: center;
+  position: relative;
   /* flex-direction: column; */
 }
 .circle {
   border: 1px solid hotpink;
   border-radius: 50%;
-  min-height: 25px;
-  min-width: 25px;
-
+  min-height: 100px;
+  min-width: 100px;
   margin: 15px;
   /* display: inline-block; */
+  background-position: center;
+  background-size: 90px;
+  background-repeat: no-repeat;
 }
 .text {
   font-family: Arial, Helvetica, sans-serif;
   padding: 5px;
 }
+
+.retailer_info {
+  font-weight: bold;
+  position: absolute;
+  left: 20%;
+  top: 0;
+}
+
+.order_num {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  color: gray;
+}
+
+.order_total {
+  position: absolute;
+  top: 0;
+  right: 5%;
+}
+
+.est_del_info {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+}
+
