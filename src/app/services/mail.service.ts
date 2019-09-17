@@ -23,7 +23,7 @@ export class MailService {
   }
 
   getAmazonEmailIdCall(): Observable<any> {
-    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // Called from mail component: getAmazonEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
@@ -35,7 +35,7 @@ export class MailService {
   }
 
   getTargetEmailIdCall(): Observable<any> {
-    // Called from mail component: getEmailIdCall() gets the access token and stores it in the service then uses that
+    // Called from mail component: getTargetEmailIdCall() gets the access token and stores it in the service then uses that
     // access token to make an API call
     // with the query params and the Bearer headers.  This returns a list of email ID's.
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
@@ -45,12 +45,6 @@ export class MailService {
         headers: { Authorization: "Bearer " + this.accessToken }
       });
   }
-
-  // concatArrays() {
-  //   this.emailIdData = this.amazonIdData.concat(this.targetIdData);
-  //   console.log(this.emailIdData);
-  //   return this.emailIdData;
-  // }
 
   splitIdsOff(emailData) {
     // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
@@ -176,9 +170,16 @@ export class MailService {
     const getOrderTotalReg = /class="summary-text"\salign="right">\D\d+\D\d+</.exec(decodedBodyData);
     const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
     const orderTotal = orderTotalReg[0];
-    const getEstArrivalDateReg = /class="product-deliv-date">\sarriving\sby\s\w+,\s\w+\s\d+/.exec(decodedBodyData);
-    const estArrivalDateReg = /\w+,\s\w+\s\d+/.exec(getEstArrivalDateReg[0]);
-    const estArrivalDate = estArrivalDateReg[0];
+    let estArrivalDate = '';
+    if (/Arriving\s\w+,\s\w+\s\d+/.test(decodedBodyData)) {
+      const getEstArrivalDateReg = /Arriving\s\w+,\s\w+\s\d+/.exec(decodedBodyData);
+      const estArrivalDateReg = /\w+,\s\w+\s\d+/.exec(getEstArrivalDateReg[0]);
+      estArrivalDate = estArrivalDateReg[0];
+    } else {
+      const getEstArrivalDateReg = /class="product-deliv-date">\sarriving\sby\s\w+,\s\w+\s\d+/.exec(decodedBodyData);
+      const estArrivalDateReg = /\w+,\s\w+\s\d+/.exec(getEstArrivalDateReg[0]);
+      estArrivalDate = estArrivalDateReg[0];
+    }
     const order = {
       retailer: retailer,
       orderNum: orderNum,
