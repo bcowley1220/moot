@@ -1,0 +1,12 @@
+<ul>
+  <li>
+    <span class="circle"></span>
+    <div class="text" (click)="showModal()">
+      <p>Retailer: {{ message.payload.headers[13].value }}</p>
+      <p>Order #</p>
+      <p>Order Status</p>
+      <p>Index # of: {{ messageIndex }}</p>
+      <div *ngIf="modalBoolean">Can you see me?</div>
+    </div>
+  </li>
+</ul>
