@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
+import { forkJoin } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
@@ -27,11 +28,10 @@ export class MailService {
     // with the query params and the Bearer headers.  This returns a list of email ID's.
     // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
     return this.http.get(
-      'https://www.googleapis.com/gmail/v1/users/me/messages?q={ "Amazon Order Confirmation" }',
+      'https://www.googleapis.com/gmail/v1/users/me/messages?q={ "Amazon Order Confirmation"}',
       {
         headers: { Authorization: "Bearer " + this.accessToken }
-      }
-    );
+      });
   }
 
   splitIdsOff(emailData) {
