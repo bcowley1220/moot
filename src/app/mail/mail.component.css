@@ -87,6 +87,7 @@
   }
   .order{
 
+
     overflow: visible;
     height: 240px;
     width: 240px;
@@ -112,3 +113,13 @@
     left: 12%;
   }
 }
+
+.modal {
+  position: absolute;
+  top: 10%;
+  z-index: 10;
+  width: 80vw;
+  height: 80vh;
+  background-color: white;
+}
+

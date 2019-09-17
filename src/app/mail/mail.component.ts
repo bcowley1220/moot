@@ -10,32 +10,49 @@ export class MailComponent implements OnInit {
   mailIdList: any[] = [];
   mailMessageList: any[] = [];
   emailIdData: any = [];
+  targetIdData: any = [];
+  amazonIdData: any = [];
   accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
   filteredList: any = [];
   decodedBodyData: any = [];
+  decodedHTMLData: any = [];
+  modalBoolean: boolean = false;
   orders: any[];
+  arrayLocation: any;
+
   constructor(private http: HttpClient, private mailService: MailService) {}
 
   // On Init: Runs an async function that makes the initial API call for the ID list.
   async ngOnInit() {
-    // Jank, wait for page to boot
     await new Promise(resolve => setTimeout(resolve, 2000));
-    await this.mailService.getEmailIdCall().subscribe(response => {
-      const emailIdData = response.messages; //Sets Amazon response equal to emailID array
-      console.log(emailIdData);
-      return (this.emailIdData = emailIdData);
-      }); // List of 100 message ID's, threadID's and a next page token
+    await this.mailService.getAmazonEmailIdCall().subscribe(response => {
+      const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
+      console.log(amazonIdData);
+      return (this.amazonIdData = amazonIdData);
+    }); // List of 100 message ID's, threadID's and a next page token
+    await this.mailService.getTargetEmailIdCall().subscribe(response => {
+      const targetIdData = response.messages;
+      console.log(targetIdData);
+      return (this.targetIdData = targetIdData);
+    });
     // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
     await new Promise(resolve => setTimeout(resolve, 2000));
+    this.emailIdData = this.amazonIdData.concat(this.targetIdData);
+    console.log(this.emailIdData);
     this.splitIdsOff();
     this.getEmailContent();
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.decodeData();
+    // this.decodeHTMLBody();
     this.getOrdersArray();
   }
+
+  // concatArrays() {
+  //   this.mailService.concatArrays()
+  // }
 
   splitIdsOff() {
     // √ This function takes the emailIdData list and breaks it down into an array of just the ID's in our service
@@ -54,7 +71,6 @@ export class MailComponent implements OnInit {
           messageData.push(response); // Full unedited emails
           return (this.messageData = messageData); // Sets array from service equal to the array in the component.
           console.log(this.messageData);
-
         });
     }
     return (this.mailService.messageData = messageData);
@@ -82,7 +98,15 @@ export class MailComponent implements OnInit {
   getImage(retailer) {
     switch (retailer) {
       case "Amazon":
-        return 'url(../assets/amazon-logo.svg)';
+        return "url(../assets/amazon-logo.svg)";
+      case "Target":
+        return "url(../assets/target-logo.svg)";
     }
+  }
+  showModal(i) {
+    console.log(i);
+    this.modalBoolean = !this.modalBoolean;
+    let arrayLocation = this.orders[i];
+    return (this.arrayLocation = arrayLocation);
   }
 }
