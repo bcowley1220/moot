@@ -9,7 +9,7 @@
   height: 120px;
   margin: 17px;
   position: relative;
-  top: 150px;
+  /* top: 50px; */
   padding: 3px;
   box-shadow: 0px 3px 6px #000000;
 }
@@ -84,12 +84,13 @@
     position: relative;
     transform: translateX(-36px) translateY(-115px);
   }
-  .body{
+  .body {
+    width: 100%;
     display: grid;
-    grid-template-columns:  1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-content: center;
-    margin: 0px 20% 0px 20%;
+    margin: 0px 0px 0px 30px;
   }
   .order {
     overflow: visible;
@@ -146,4 +147,3 @@
     box-shadow: 10px 10px 8px #888888;
   }
 }
-
