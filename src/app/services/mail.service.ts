@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
@@ -18,10 +18,18 @@ export class MailService {
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
   orders: any[] = [];
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   navigateToMain() {
     this.router.navigate(["main"]);
+  }
+
+  navigateToOnboard() {
+    this.router.navigate([""]);
   }
 
   getAmazonEmailIdCall(): Observable<any> {
@@ -87,7 +95,6 @@ export class MailService {
       const holder = this.messageData[i].payload.headers;
       for (let i = 0; i < holder.length; i++) {
         if (holder[i].name == "Subject") {
-          // console.log(holder[i].value);
           if (holder[i].value.includes("Amazon Order Confirmation")) {
             this.filteredList.push(this.messageData[i]);
           }
@@ -100,17 +107,23 @@ export class MailService {
   async getAccessToken() {
     console.log("Async getAccess Token is working");
     (window as any).onSignIn = googleUser => {
-      console.log("onSignIn function working");
       this.accessToken = googleUser.getAuthResponse(true).access_token;
-      // const element = document.getElementById("app-root");
-      // this.accessToken = access_token;
       console.log(this.accessToken);
-      // element.setAttribute('data-access_token', access_token);
+      googleUser.disconnect(); // Disconnect user immediately after getting access token
+      this.validateAccessCode();
     };
+  }
+  validateAccessCode() {
+    if (this.accessToken) {
+      this.zone.run(() => this.navigateToMain());
+    } else {
+      this.zone.run(() => this.navigateToOnboard());
+    }
   }
 
   // .replace(/-/g, '+').replace(/_/g, '/')
   decodeData() {
+    let amazonHTML = '';
     console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
       if (this.messageData[i].payload.body.size != 0) {
@@ -120,11 +133,19 @@ export class MailService {
             .replace(/\_/g, "/")
         );
       } else if (this.messageData[i].payload.parts[0].body.size != 0) {
+        console.log(this.messageData[i].payload.parts[0]);
         this.decodedBodyData = atob(
           this.messageData[i].payload.parts[0].body.data
             .replace(/\_/g, "/")
             .replace(/\-/g, "+")
         );
+        if (this.messageData[i].payload.parts[0].mimetype === 'text/html') {
+          amazonHTML = atob(
+            this.messageData[i].payload.parts[0].body.data
+              .replace(/\_/g, "/")
+              .replace(/\-/g, "+")
+          );
+        }
       } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
         this.decodedBodyData = atob(
           this.messageData[i].payload.parts[0].parts[0].body.data.replace(
@@ -132,6 +153,13 @@ export class MailService {
             "/"
           )
         );
+        if (this.messageData[i].payload.parts[0].parts[1].body.size != 0) {
+          amazonHTML = atob(
+            this.messageData[i].payload.parts[0].parts[1].body.data
+              .replace(/\_/g, "/")
+              .replace(/\-/g, "+")
+          );
+        }
       }
       // console.log(this.decodedBodyData);
       // If sender is Amazon
@@ -141,7 +169,7 @@ export class MailService {
         if (holder[i].name === "From") {
           if (holder[i].value.includes("amazon.com")) {
             console.log("The sender is indeed Amazon!");
-            this.isolateDataAmazon(this.decodedBodyData, message);
+            this.isolateDataAmazon(this.decodedBodyData, message, amazonHTML);
           } else if (holder[i].value.includes("target.com")) {
             console.log("The sender is indeed Target!");
             this.isolateDataTarget(this.decodedBodyData, message);
@@ -156,7 +184,7 @@ export class MailService {
   }
   // this.isolateDataAmazon(this.decodedBodyData);
 
-  isolateDataAmazon(decodedBodyData, messageData) {
+  isolateDataAmazon(decodedBodyData, messageData, amazonHTML) {
     // console.log(this.decodedBodyData);
     // Builds a new object with with information needed and pushes to order array
     // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
@@ -188,7 +216,8 @@ export class MailService {
       estArrivalDate: estArrivalDate,
       bodyText: decodedBodyData,
       internalDate: Number(messageData.internalDate),
-      dateTime: new Date(Number(messageData.internalDate))
+      dateTime: new Date(Number(messageData.internalDate)),
+      amazonHTML: amazonHTML
     };
     this.orders.push(order);
   }
@@ -224,7 +253,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: this.decodedBodyData
+      bodyText: this.decodedBodyData,
+      dateTime: new Date(Number(messageData.internalDate))
     };
     this.orders.push(order);
   }
@@ -241,12 +271,12 @@ export class MailService {
   isolateDataEbay(decodedBodyData, messageData) {
     console.log(decodedBodyData);
     const retailer = "Ebay";
-    const getOrderNumReg = /(Item\sID\D?\D?\w?\D?\D\s\d+)|(Item\sI\w\D\s\d+)/.exec(
+    const getOrderNumReg = /(Item\sID\D?(&nbsp;)?\D?\w?\D?\D\s\d+)|(Item\sI\w\D\s\d+)/.exec(
       decodedBodyData
     );
     const orderNumReg = /\d+/.exec(getOrderNumReg[0]);
     const orderNum = orderNumReg[0];
-    const getOrderTotalReg = /(\D?\w?\D?Total\D?\D?\w?\D?:\s\D\d+\D\d+)|(PAID\s\D\s\D\d+\D\d+)/.exec(
+    const getOrderTotalReg = /(\D?\w?\D?Total\D?\D?\w?\D?:\s\D\d+\D\d+)|(PAID\s\D\s\D\d+\D\d+)|(Paid\D\s\D\d+\D\d+)/.exec(
       decodedBodyData
     );
     const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
@@ -263,7 +293,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: decodedBodyData
+      bodyText: decodedBodyData,
+      dateTime: new Date(Number(messageData.internalDate))
     };
     this.orders.push(order);
   }

@@ -1,7 +1,6 @@
-<div *ngIf="!showBoard">
+<div class="onBoardDiv">
   <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
-      <img id="logo" src="assets/mootLogo.gif" alt="logo" />
-      
+    <img id="logo" src="assets/mootLogo.gif" alt="logo" />
   </div>
   <div class="whole" id="second" *ngIf="showSecond" (click)="togglePageTwo()">
     <img
@@ -18,9 +17,6 @@
       <p>Your data is not stored anywhere</p>
       <p>Sign in with your Gmail to get started!</p>
     </div>
-    <button id="button" *ngIf="!showBoard" (click)="goToMain()">
-      Start App
-    </button>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
   </div>
   <section class="threeDots" *ngIf="first">

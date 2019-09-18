@@ -23,7 +23,8 @@ const appRoutes: Routes = [
     MailComponent,
     OnboardComponent,
     MainComponent,
-    OrderModalComponent
+    OrderModalComponent,
+    EmailBodyComponent
   ],
   imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
   providers: [MailService],
