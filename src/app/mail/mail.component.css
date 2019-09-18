@@ -9,13 +9,17 @@
   height: 120px;
   margin: 7px;
   position: relative;
+  top: 150px;
   padding: 3px;
   box-shadow: 0px 3px 6px #000000;
 }
 .circle {
   border: 1.5px solid #6dfc98;
   border-radius: 50%;
-  margin: 10px;
+  min-height: 100px;
+  min-width: 100px;
+  margin: 15px;
+  display: inline-block;
   background-position: center;
   background-size: 90px;
   background-repeat: no-repeat;
@@ -47,30 +51,30 @@
   bottom: 0;
   left: 20%;
 }
-@media only screen and (min-width: 320px) and (max-width: 449px){ 
+@media only screen and (min-width: 320px) and (max-width: 449px) {
   .circle {
     min-height: 45px;
     min-width: 45px;
     margin: 5px;
   }
-  .text{
+  .text {
     font-size: 85%;
   }
 }
-@media only screen and (min-width: 450px) and (max-width: 599px){ 
+@media only screen and (min-width: 450px) and (max-width: 599px) {
   .circle {
     min-height: 75px;
     min-width: 75px;
     margin: 5px;
   }
 }
-@media only screen and (min-width: 600px) and (max-width: 1023px){
+@media only screen and (min-width: 600px) and (max-width: 1023px) {
   .circle {
     min-height: 90px;
     min-width: 90px;
   }
 }
-@media only screen and (min-width: 1024px){
+@media only screen and (min-width: 1024px) {
   .circle {
     min-height: 50px;
     min-width: 50px;
@@ -78,22 +82,21 @@
     position: relative;
     transform: translateX(-36px) translateY(-115px);
   }
-  .body{
+  .body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-items: center;
     grid-column-gap: 20px;
   }
-  .order{
-
-
+  .order {
     overflow: visible;
     height: 240px;
     width: 240px;
     margin: 15px;
+    margin-left: 30px;
   }
-  .text{
+  .text {
     font-size: 100%;
   }
   .retailer_info {
@@ -122,4 +125,3 @@
   height: 80vh;
   background-color: white;
 }
-
