@@ -34,7 +34,7 @@ export class OrderModalComponent implements OnInit {
   sanitizeHTMLContent() {
     this.htmlData = this.sanitizer.bypassSecurityTrustHtml(this.dynamicHTML);
   }
-  showModal() {
+  hideModal() {
     console.log("x button is working");
     this.modalBoolean.emit(event);
   }

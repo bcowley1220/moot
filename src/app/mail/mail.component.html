@@ -2,7 +2,7 @@
 <div class="body">
   <div
     class="order"
-    *ngFor="let order of orders; let i = index"
+    *ngFor="let order of orders; index as i"
     (click)="showModal(i)"
   >
     <span
@@ -27,7 +27,7 @@
     <app-order-modal
       [ordersArray]="orders"
       [orderForModal]="arrayLocation"
-      (modalBoolean)="showModal(i)"
+      (modalBoolean)="hideModal()"
     ></app-order-modal>
   </div>
 </div>
