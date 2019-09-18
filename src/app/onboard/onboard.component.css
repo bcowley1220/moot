@@ -1,11 +1,32 @@
+.onBoardDiv {
+  position: relative;
+}
+
+.onThree {
+  color: gray;
+}
+
+.g-signin2 {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 5px 5px 10px gray;
+}
+
+.threeDots {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @media only screen and (min-width: 320px) {
   .whole {
     height: 100vh;
     width: 100vw;
   }
-  #threeDots {
-    position: relative;
-  }
+
   .dot {
     height: 12px;
     width: 12px;
@@ -13,6 +34,8 @@
     border: solid 1px #03efc1;
     margin: 8px;
     background-color: #03efc1;
+    box-shadow: 5px 5px 5px gray;
+
   }
   .dotFilled {
     height: 12px;
@@ -21,6 +44,8 @@
     border: solid 1px yellow;
     background-color: yellow;
     margin: 8px;
+    box-shadow: 5px 5px 5px gray;
+
   }
   #first,
   #second,
@@ -118,7 +143,7 @@ p {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: left;
-  color: white;
+  color: #e54e7f;
   padding: 5px;
 }
 .highlight {
@@ -139,6 +164,7 @@ p {
     margin-left: 0;
     padding: 0;
   }
+
   .onThree {
     margin: 10px;
     padding: 0;
@@ -151,6 +177,10 @@ p {
   .acronym {
     display: flex;
     justify-content: center;
+  }
+
+  #logo {
+    width: 50vw;
   }
 }
 @media only screen and (min-width: 1024px) {
