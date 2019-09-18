@@ -38,6 +38,10 @@ export class OnboardComponent implements OnInit {
     this.showThird = !this.showThird;
   }
 
+  validateAccessToken() {
+    this.mailService.validateAccessCode();
+  }
+
   goToMain() {
     this.mailService.navigateToMain();
   }
