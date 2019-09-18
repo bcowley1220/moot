@@ -7,9 +7,9 @@
   align-items: center;
   overflow: hidden;
   height: 120px;
-  margin: 7px;
+  margin: 17px;
   position: relative;
-  top: 150px;
+  /* top: 50px; */
   padding: 3px;
   box-shadow: 0px 3px 6px #000000;
 }
@@ -23,6 +23,7 @@
   background-position: center;
   background-size: 90px;
   background-repeat: no-repeat;
+  box-shadow: 0px 3px 6px #000000;
 }
 .text {
   font-family: Arial, Helvetica, sans-serif;
@@ -74,6 +75,7 @@
     min-width: 90px;
   }
 }
+
 @media only screen and (min-width: 1024px) {
   .circle {
     min-height: 50px;
@@ -83,18 +85,18 @@
     transform: translateX(-36px) translateY(-115px);
   }
   .body {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    justify-items: center;
-    grid-column-gap: 20px;
+    justify-content: center;
+    margin: 0px 0px 0px 30px;
   }
   .order {
     overflow: visible;
     height: 240px;
     width: 240px;
     margin: 15px;
-    margin-left: 30px;
   }
   .text {
     font-size: 100%;
@@ -116,12 +118,32 @@
     left: 12%;
   }
 }
-
 .modal {
-  position: absolute;
-  top: 10%;
+  position: fixed;
+  bottom: 50%;
+  top: 25%;
+  left: 50%;
   z-index: 10;
-  width: 80vw;
-  height: 80vh;
-  background-color: white;
+
+  width: 30vw;
+  height: 50vh;
+  border: 2px solid #e54e7f;
+  background-color: #03efc1;
+  border-radius: 15px;
+  box-shadow: 10px 10px 8px #888888;
+}
+@media only screen and (min-width: 1024px) {
+  .modal {
+    position: fixed;
+    bottom: 50%;
+    top: 25%;
+    left: 50%;
+    z-index: 10;
+    width: 30vw;
+    height: 50vh;
+    border: 2px solid #e54e7f;
+    background-color: #03efc1;
+    border-radius: 15px;
+    box-shadow: 10px 10px 8px #888888;
+  }
 }

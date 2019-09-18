@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from '@angular/core';
+import { Injectable, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
@@ -18,7 +18,11 @@ export class MailService {
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
   orders: any[] = [];
-  constructor(private http: HttpClient, private router: Router, private zone: NgZone) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   navigateToMain() {
     this.router.navigate(["main"]);
@@ -171,7 +175,7 @@ export class MailService {
             this.isolateDataTarget(this.decodedBodyData, message);
           } else if (holder[i].value.includes("ebay.com")) {
             console.log("The sender is indeed Ebay!");
-            this.isolateDataEbay(this.decodedBodyData, message);
+            // this.isolateDataEbay(this.decodedBodyData, message);
           } // Else if's for other retailers
         }
       }
