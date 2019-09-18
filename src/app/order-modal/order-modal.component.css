@@ -3,6 +3,7 @@
 
   display: flex;
   flex-direction: column;
+  word-wrap: break-word;
 }
 p {
   height: 10px;
@@ -17,4 +18,11 @@ p {
 }
 #retailer {
   font-size: 25px;
+}
+button {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  background-color: #fffa5b;
+  border-radius: 5px;
 }

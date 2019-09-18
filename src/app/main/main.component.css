@@ -2,13 +2,14 @@ nav {
   position: sticky;
   top: 0;
   width: 100%;
+  z-index: 3;
+  pointer-events: none;
 }
+
 .mobileNav {
   width: 100%;
-
   visibility: visible;
   position: absolute;
-
 }
 
 .desktopNavLogo {
