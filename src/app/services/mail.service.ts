@@ -140,10 +140,12 @@ export class MailService {
         }
       }
     }
+    this.sortOrders();
   }
   // this.isolateDataAmazon(this.decodedBodyData);
 
   isolateDataAmazon(decodedBodyData, messageData) {
+    // console.log(this.decodedBodyData);
     // Builds a new object with with information needed and pushes to order array
     // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
     // Order # for Amazon are 3 digits followed by 7 followed by 7
@@ -173,7 +175,8 @@ export class MailService {
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
       bodyText: decodedBodyData,
-      snippet: messageData.snippet
+      internalDate: Number(messageData.internalDate),
+      dateTime: new Date(Number(messageData.internalDate))
     };
     this.orders.push(order);
   }
@@ -211,8 +214,12 @@ export class MailService {
     this.orders.push(order);
   }
 
-  // showModal() {
-  //   // console.log(`You have clicked the index of ${{ index }} `);
-  //   this.modalBoolean = !this.modalBoolean;
-  // }
+  sortOrders() {
+    this.orders
+      .sort((a, b) => (a.internalDate > b.internalDate ? 1 : -1))
+      .reverse();
+    for (let i = 0; i < this.orders.length; i++) {
+      console.log(this.orders[i].dateTime);
+    }
+  }
 }

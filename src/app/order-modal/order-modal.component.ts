@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MailService } from "../services/mail.service";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-order-modal",
@@ -11,15 +12,28 @@ export class OrderModalComponent implements OnInit {
   @Input() index: number;
   @Input() orderForModal: any;
   @Output() modalPopUp: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private mailService: MailService) {}
+  dynamicHTML: any;
+  htmlData: any;
+  orders: any[];
+  constructor(
+    private mailService: MailService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
-    console.log(this.ordersArray);
-    console.log(this.index);
-    console.log(this.orderForModal);
+    // console.log(this.ordersArray);
+    // console.log(this.index);
+    // console.log(this.orderForModal);
+    this.dynamicHTML = `<div>${this.orderForModal.bodyText}</div>`;
+
+    this.sanitizeHTMLContent();
+    this.orders = this.mailService.orders;
+    console.log(this.orderForModal.dateTime);
   }
 
+  sanitizeHTMLContent() {
+    this.htmlData = this.sanitizer.bypassSecurityTrustHtml(this.dynamicHTML);
+  }
   showModal() {
     this.modalPopUp.emit(event);
   }
