@@ -12,6 +12,7 @@ export class MailComponent implements OnInit {
   emailIdData: any = [];
   targetIdData: any = [];
   amazonIdData: any = [];
+  ebayIdData: any = [];
   accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
@@ -38,10 +39,18 @@ export class MailComponent implements OnInit {
     }, error => {
       return this.targetIdData = [];
     });
+    await this.mailService.getEbayEmailIdCall().subscribe(response => {
+      const ebayIdData = response.messages;
+      console.log('Ebay Data:', ebayIdData);
+      return (this.ebayIdData = ebayIdData);
+    }, error => {
+      return this.ebayIdData = [];
+    });
     // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
     await new Promise(resolve => setTimeout(resolve, 2000));
-    this.emailIdData = this.amazonIdData.concat(this.targetIdData);
+    // Takes the array from the GET requests and merges them into one array
+    this.emailIdData = this.amazonIdData.concat(this.targetIdData, this.ebayIdData);
     console.log(this.emailIdData);
     this.splitIdsOff();
     this.getEmailContent();
@@ -101,6 +110,8 @@ export class MailComponent implements OnInit {
         return "url(../assets/amazon-logo.svg)";
       case "Target":
         return "url(../assets/target-logo.svg)";
+      case "Ebay":
+        return "url(../assets/ebay-logo.svg)";
     }
   }
   showModal(i) {
