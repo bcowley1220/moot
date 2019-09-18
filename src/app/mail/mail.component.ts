@@ -12,6 +12,7 @@ export class MailComponent implements OnInit {
   emailIdData: any = [];
   targetIdData: any = [];
   amazonIdData: any = [];
+  ebayIdData: any = [];
   accessToken: string;
   emailIdList: any = [];
   messageData: any = [];
@@ -27,20 +28,44 @@ export class MailComponent implements OnInit {
   // On Init: Runs an async function that makes the initial API call for the ID list.
   async ngOnInit() {
     await new Promise(resolve => setTimeout(resolve, 2000));
-    await this.mailService.getAmazonEmailIdCall().subscribe(response => {
-      const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
-      console.log(amazonIdData);
-      return (this.amazonIdData = amazonIdData);
-    }); // List of 100 message ID's, threadID's and a next page token
-    await this.mailService.getTargetEmailIdCall().subscribe(response => {
-      const targetIdData = response.messages;
-      console.log(targetIdData);
-      return (this.targetIdData = targetIdData);
-    });
+    await this.mailService.getAmazonEmailIdCall().subscribe(
+      response => {
+        const amazonIdData = response.messages; // Sets Amazon response equal to emailID array
+        console.log(amazonIdData);
+        return (this.amazonIdData = amazonIdData);
+      },
+      error => {
+        return (this.amazonIdData = []);
+      }
+    ); // List of 100 message ID's, threadID's and a next page token
+    await this.mailService.getTargetEmailIdCall().subscribe(
+      response => {
+        const targetIdData = response.messages;
+        console.log(targetIdData);
+        return (this.targetIdData = targetIdData);
+      },
+      error => {
+        return (this.targetIdData = []);
+      }
+    );
+    await this.mailService.getEbayEmailIdCall().subscribe(
+      response => {
+        const ebayIdData = response.messages;
+        console.log("Ebay Data:", ebayIdData);
+        return (this.ebayIdData = ebayIdData);
+      },
+      error => {
+        return (this.ebayIdData = []);
+      }
+    );
     // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
     await new Promise(resolve => setTimeout(resolve, 2000));
-    this.emailIdData = this.amazonIdData.concat(this.targetIdData);
+    // Takes the array from the GET requests and merges them into one array
+    this.emailIdData = this.amazonIdData.concat(
+      this.targetIdData,
+      this.ebayIdData
+    );
     console.log(this.emailIdData);
     this.splitIdsOff();
     this.getEmailContent();
@@ -101,10 +126,12 @@ export class MailComponent implements OnInit {
         return "url(../assets/amazonLogo.png)";
       case "Target":
         return "url(../assets/target-logo.svg)";
+      case "Ebay":
+        return "url(../assets/ebay-logo.svg)";
     }
   }
   showModal(i) {
-    console.log(i);
+    // console.log(i);
     this.modalBoolean = !this.modalBoolean;
     let arrayLocation = this.orders[i];
     return (this.arrayLocation = arrayLocation);

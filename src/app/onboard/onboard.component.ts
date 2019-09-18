@@ -10,6 +10,9 @@ export class OnboardComponent implements OnInit {
   showFirst: boolean = true;
   showSecond: boolean = false;
   showThird: boolean = false;
+  first: boolean = true;
+  second: boolean = false;
+  third: boolean = false;
   constructor(private mailService: MailService) {}
 
   async ngOnInit() {
@@ -30,12 +33,20 @@ export class OnboardComponent implements OnInit {
   togglePageOne() {
     this.showFirst = !this.showFirst;
     this.showSecond = !this.showSecond;
+    this.first = !this.first;
+    this.second  = !this.second;
   }
 
   togglePageTwo() {
     this.loadScript();
     this.showSecond = !this.showSecond;
     this.showThird = !this.showThird;
+    this.second = !this.second;
+    this.third = !this.third;
+  }
+
+  validateAccessToken() {
+    this.mailService.validateAccessCode();
   }
 
   goToMain() {

@@ -1,11 +1,6 @@
-<div *ngIf="!showBoard">
+<div class="onBoardDiv">
   <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
     <img id="logo" src="assets/mootLogo.gif" alt="logo" />
-    <section id="threeDots">
-      <object class="dotFilled"></object>
-      <object class="dot"></object>
-      <object class="dot"></object>
-    </section>
   </div>
   <div class="whole" id="second" *ngIf="showSecond" (click)="togglePageTwo()">
     <img
@@ -13,28 +8,30 @@
       src="../../assets/onboard2.gif"
       alt="handshake agreement"
     />
-    <section id="threeDots">
-      <object class="dot"></object>
-      <object class="dotFilled"></object>
-      <object class="dot"></object>
-    </section>
   </div>
   <div class="whole" id="third" *ngIf="showThird">
     <img src="assets/handshake1.png" alt="handshake agreement" />
     <div class="onThree">
       <p>We sort through online order emails so you do not have to!</p>
       <p>Your security is our priority</p>
-
+      <p>Your data is not stored anywhere</p>
       <p>Sign in with your Gmail to get started!</p>
     </div>
-    <button id="button" *ngIf="!showBoard" (click)="goToMain()">
-      Start App
-    </button>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <section id="threeDots">
-      <object class="dot"></object>
-      <object class="dot"></object>
-      <object class="dotFilled"></object>
-    </section>
   </div>
+  <section class="threeDots" *ngIf="first">
+      <object class="dotFilled"></object>
+      <object class="dot"></object>
+      <object class="dot"></object>
+    </section>
+    <section class="threeDots" *ngIf="second">
+        <object class="dot"></object>
+        <object class="dotFilled"></object>
+        <object class="dot"></object>
+      </section>
+      <section class="threeDots" *ngIf="third">
+          <object class="dot"></object>
+          <object class="dot"></object>
+          <object class="dotFilled"></object>
+        </section>
 </div>
