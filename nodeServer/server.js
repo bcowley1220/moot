@@ -4,6 +4,7 @@ let app = express();
 //Added in router
 app.use(cors());
 app.use(express.json());
-let port = 8080;
+app.use(express.static(__dirname + "/dist"));
+let port = process.env.PORT || 8080;
 
 app.listen(port, () => console.log(`Server is running on PORT: ${port}!`));
