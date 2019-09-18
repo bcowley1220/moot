@@ -1,7 +1,18 @@
+<!-- References the orders array build from parsed data from emails-->
 <div class="body">
-  <div class="order" *ngFor="let order of orders">
-    <span class="circle" [style.background]="getImage(order.retailer)" [style.background-color]="'#ffffff'" [style.background-repeat]="'no-repeat'"
-          [style.background-size]="'90%'" [style.background-position]="'center'"></span>
+  <div
+    class="order"
+    *ngFor="let order of orders; let i = index"
+    (click)="showModal(i)"
+  >
+    <span
+      class="circle"
+      [style.background]="getImage(order.retailer)"
+      [style.background-repeat]="'no-repeat'"
+      [style.background-size]="'50px'"
+      [style.background-color]="'white'"
+      [style.background-position]="'center'"
+    ></span>
     <div class="text">
       <p class="retailer_info">{{ order.retailer }}</p>
       <p class="order_num">Order #{{ order.orderNum }}</p>
@@ -9,8 +20,17 @@
       <p class="est_del_info">Est. Delivery Date: {{ order.estArrivalDate }}</p>
     </div>
   </div>
+<<<<<<< HEAD
   <div class="left-side">
   </div>
   <div class="right-side">
+=======
+  <div *ngIf="modalBoolean" class="modal">
+    <app-order-modal
+      [ordersArray]="orders"
+      [index]="i"
+      [orderForModal]="arrayLocation"
+    ></app-order-modal>
+>>>>>>> master
   </div>
 </div>
