@@ -4,11 +4,25 @@ nav {
   width: 100%;
   z-index: 3;
 }
-img {
+.mobileNav {
+  width: 100%;
+  visibility: visible;
+}
+.desktopNav {
+  visibility: hidden;
   width: 100%;
 }
 app-mail {
   position: relative;
-  bottom: 425px;
   z-index: 2;
+}
+
+@media only screen and (min-width: 1024px) {
+  .mobileNav {
+    visibility: hidden;
+    position: absolute;
+  }
+  .desktopNav {
+    visibility: visible;
+  }
 }
