@@ -15,6 +15,8 @@ export class MailService {
   messageData: any = [];
   filteredList: any = [];
   decodedBodyData: any;
+  decodedHTMLData: any = [];
+  modalBoolean: boolean = false;
   orders: any[] = [];
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -107,6 +109,7 @@ export class MailService {
     };
   }
 
+  // .replace(/-/g, '+').replace(/_/g, '/')
   decodeData() {
     console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
@@ -136,7 +139,7 @@ export class MailService {
         if (holder[i].name === "From") {
           if (holder[i].value.includes("amazon.com")) {
             console.log("The sender is indeed Amazon!");
-            this.isolateDataAmazon(this.decodedBodyData);
+            this.isolateDataAmazon(this.decodedBodyData, message);
           } else if (holder[i].value.includes("target.com")) {
             console.log("The sender is indeed Target!");
             this.isolateDataTarget(this.decodedBodyData, message);
@@ -147,10 +150,10 @@ export class MailService {
         }
       }
     }
-    // this.isolateDataAmazon(this.decodedBodyData);
   }
+  // this.isolateDataAmazon(this.decodedBodyData);
 
-  isolateDataAmazon(decodedBodyData) {
+  isolateDataAmazon(decodedBodyData, messageData) {
     // Builds a new object with with information needed and pushes to order array
     // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
     // Order # for Amazon are 3 digits followed by 7 followed by 7
@@ -166,8 +169,10 @@ export class MailService {
     if (/Arriving:/.test(decodedBodyData)) {
       const estArrivalDateReg = /\w+,\s\w+\D\d+/.exec(decodedBodyData);
       estArrivalDate = estArrivalDateReg[0];
-    } else if (/delivery date:/.test(decodedBodyData)) {
-      const estArrivalDateReg = /\w+\D\s\w+\s\d+\D\s\d+/.exec(decodedBodyData);
+    } else if (/delivery date:/.test(this.decodedBodyData)) {
+      const estArrivalDateReg = /\w+\D\s\w+\s\d+\D\s\d+/.exec(
+        this.decodedBodyData
+      );
       estArrivalDate = estArrivalDateReg[0];
     } else {
       estArrivalDate = "";
@@ -177,7 +182,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: decodedBodyData
+      bodyText: decodedBodyData,
+      snippet: messageData.snippet
     };
     this.orders.push(order);
   }
@@ -213,7 +219,7 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: decodedBodyData
+      bodyText: this.decodedBodyData
     };
     this.orders.push(order);
   }
@@ -239,4 +245,5 @@ export class MailService {
     };
     this.orders.push(order);
   }
+
 }

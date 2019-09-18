@@ -1,3 +1,5 @@
+
+
 <!-- References the orders array build from parsed data from emails-->
 
 <div
@@ -18,22 +20,12 @@
     <p class="order_total">{{ order.orderTotal }}</p>
     <p class="est_del_info">Est. Delivery Date: {{ order.estArrivalDate }}</p>
   </div>
-  <div *ngIf="modalBoolean" class="modal">
-    {{ i }}
-    <span
-      class="circle"
-      [style.background]="getImage(order.retailer)"
-      [style.background-repeat]="'no-repeat'"
-      [style.background-size]="'90px'"
-      [style.background-position]="'center'"
-    ></span>
-    <p>{{ order.retailer }}</p>
-    <p>Order #{{ order.orderNum }}</p>
-    <p>{{ order.orderTotal }}</p>
-    <p>Est. Delivery Date: {{ order.estArrivalDate }}</p>
-    <p>
-      {{ order.snippet }}
-    </p>
-    <button>X</button>
-  </div>
 </div>
+<div *ngIf="modalBoolean" class="modal">
+  <app-order-modal
+    [ordersArray]="orders"
+    [index]="i"
+    [orderForModal]="arrayLocation"
+  ></app-order-modal>
+</div>
+
