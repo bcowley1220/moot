@@ -26,7 +26,6 @@
     height: 100vh;
     width: 100vw;
   }
-
   .dot {
     height: 12px;
     width: 12px;
@@ -128,12 +127,6 @@
     border: none;
   }
 }
-/* #second{
-    animation: 2s;
-}
-#third{
-    animation: 2s;
-} */
 img {
   width: 100%;
   height: auto;
@@ -173,10 +166,6 @@ p {
   }
   .highlight {
     font-size: 200%;
-  }
-  .acronym {
-    display: flex;
-    justify-content: center;
   }
 
   #logo {
