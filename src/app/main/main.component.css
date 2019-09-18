@@ -8,6 +8,14 @@ nav {
   visibility: visible;
   position: absolute;
 }
+
+.desktopNavLogo {
+  height: 180px;
+  position: absolute;
+  right: -50px;
+  top: -25px;
+}
+
 .desktopNav {
   display: none;
   width: 100%;

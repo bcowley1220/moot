@@ -17,7 +17,7 @@
       <p class="retailer_info">{{ order.retailer }}</p>
       <p class="order_num">Order #{{ order.orderNum }}</p>
       <p class="order_total">{{ order.orderTotal }}</p>
-      <p class="est_del_info">Est. Delivery Date: {{ order.estArrivalDate }}</p>
+      <p class="est_del_info">Est. Delivery Date:<br> {{ order.estArrivalDate }}</p>
     </div>
   </div>
   <div *ngIf="modalBoolean" class="modal">

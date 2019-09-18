@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import {Injectable, NgZone} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
@@ -18,10 +18,14 @@ export class MailService {
   decodedHTMLData: any = [];
   modalBoolean: boolean = false;
   orders: any[] = [];
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private zone: NgZone) {}
 
   navigateToMain() {
     this.router.navigate(["main"]);
+  }
+
+  navigateToOnboard() {
+    this.router.navigate([""]);
   }
 
   getAmazonEmailIdCall(): Observable<any> {
@@ -100,13 +104,22 @@ export class MailService {
   async getAccessToken() {
     console.log("Async getAccess Token is working");
     (window as any).onSignIn = googleUser => {
-      console.log("onSignIn function working");
       this.accessToken = googleUser.getAuthResponse(true).access_token;
       // const element = document.getElementById("app-root");
       // this.accessToken = access_token;
       console.log(this.accessToken);
+      googleUser.disconnect();
+      this.validateAccessCode();
       // element.setAttribute('data-access_token', access_token);
     };
+  }
+  validateAccessCode() {
+    console.log("GO GO GO");
+    if (this.accessToken) {
+      this.zone.run(() => this.navigateToMain());
+    } else {
+      this.zone.run(() => this.navigateToOnboard());
+    }
   }
 
   // .replace(/-/g, '+').replace(/_/g, '/')
@@ -147,7 +160,7 @@ export class MailService {
             this.isolateDataTarget(this.decodedBodyData, message);
           } else if (holder[i].value.includes("ebay.com")) {
             console.log("The sender is indeed Ebay!");
-            // this.isolateDataEbay(this.decodedBodyData, message);
+            this.isolateDataEbay(this.decodedBodyData, message);
           } // Else if's for other retailers
         }
       }
@@ -224,7 +237,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: this.decodedBodyData
+      bodyText: this.decodedBodyData,
+      dateTime: new Date(Number(messageData.internalDate))
     };
     this.orders.push(order);
   }
@@ -263,7 +277,8 @@ export class MailService {
       orderNum: orderNum,
       orderTotal: orderTotal,
       estArrivalDate: estArrivalDate,
-      bodyText: decodedBodyData
+      bodyText: decodedBodyData,
+      dateTime: new Date(Number(messageData.internalDate))
     };
     this.orders.push(order);
   }
