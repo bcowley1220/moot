@@ -11,7 +11,7 @@ export class OrderModalComponent implements OnInit {
   @Input() ordersArray: [];
   @Input() index: number;
   @Input() orderForModal: any;
-  // @Output() modalBoolean: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modalBoolean: EventEmitter<any> = new EventEmitter<any>();
   dynamicHTML: any;
   htmlData: any;
   orders: any[];
@@ -34,8 +34,8 @@ export class OrderModalComponent implements OnInit {
   sanitizeHTMLContent() {
     this.htmlData = this.sanitizer.bypassSecurityTrustHtml(this.dynamicHTML);
   }
-  // showModal() {
-  //   console.log("x button is working");
-  //   this.modalBoolean.emit(event);
-  // }
+  showModal() {
+    console.log("x button is working");
+    this.modalBoolean.emit(event);
+  }
 }
