@@ -27,12 +27,12 @@ export class OnboardComponent implements OnInit {
     body.appendChild(script);
   }
 
-  toggleOnboardTwo() {
+  togglePageOne() {
     this.showFirst = !this.showFirst;
     this.showSecond = !this.showSecond;
   }
 
-  toggleOnboardThree() {
+  togglePageTwo() {
     this.loadScript();
     this.showSecond = !this.showSecond;
     this.showThird = !this.showThird;

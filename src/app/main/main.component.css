@@ -1,0 +1,32 @@
+nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.mobileNav {
+  width: 100%;
+  visibility: visible;
+  position: absolute;
+}
+.desktopNav {
+  display: none;
+  width: 100%;
+}
+app-mail {
+  position: relative;
+  z-index: 2;
+}
+
+@media only screen and (min-width: 1024px) {
+  .mobileNav {
+    display: none;
+    visibility: hidden;
+    /* z-index: -10; */
+    top: -100%;
+  }
+  .desktopNav {
+    visibility: visible;
+    display: block;
+    position: absolute;
+  }
+}
