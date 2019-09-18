@@ -1,3 +1,8 @@
 div {
   background: #b4f8c8;
 }
+@media only screen and (min-width: 1024px) {
+  router-outlet {
+    background-color: white;
+  }
+}

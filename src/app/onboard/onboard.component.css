@@ -70,8 +70,8 @@
     }
   }
   img {
-    width: 35%;
-    height: auto;
+    width: auto;
+    height: 100vh;
     margin: 0px;
   }
   p {
@@ -155,7 +155,7 @@ p {
 }
 @media only screen and (min-width: 1024px) {
   img {
-    width: 25%;
+    width: auto;
     height: auto;
   }
   p {

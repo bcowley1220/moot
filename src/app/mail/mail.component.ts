@@ -98,7 +98,7 @@ export class MailComponent implements OnInit {
   getImage(retailer) {
     switch (retailer) {
       case "Amazon":
-        return "url(../assets/amazon-logo.svg)";
+        return "url(../assets/amazonLogo.png)";
       case "Target":
         return "url(../assets/target-logo.svg)";
     }

@@ -1,31 +1,3 @@
-<div>
-  <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
-    <img id="logo" src="assets/mootLogo.gif" alt="logo" />
-  </div>
-  <div class="whole" id="second" *ngIf="showSecond" (click)="togglePageTwo()">
-    <img
-      id="onboard2"
-      src="../../assets/onboard2.gif"
-      alt="handshake agreement"
-    />
-  </div>
-
-  <div class="whole" id="third" *ngIf="showThird">
-    <img src="assets/handshake1.png" alt="handshake agreement" />
-
-    <p>
-      We've partnered with Google <br />
-      to streamline and organize<br />
-      the shipments<br />
-      coming your way
-    </p>
-    <button id="button" *ngIf="!showBoard" (click)="goToMain()">
-      Start App
-    </button>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  </div>
-</div>
-
 <div *ngIf="!showBoard">
   <div class="whole" id="first" *ngIf="showFirst" (click)="togglePageOne()">
     <img id="logo" src="assets/mootLogo.gif" alt="logo" />
@@ -36,16 +8,11 @@
     </section>
   </div>
   <div class="whole" id="second" *ngIf="showSecond" (click)="togglePageTwo()">
-    <p class="highlight" id="hello">hello.</p>
-    <p>welcome to</p>
-    <p class="highlight">moot</p>
-    <p>an application to</p>
-    <div class="acronym">
-      <p><span class="highlight">m</span>anage</p>
-      <p><span class="highlight">o</span>nline</p>
-      <p><span class="highlight">o</span>rders &</p>
-      <p><span class="highlight">t</span>racking</p>
-    </div>
+    <img
+      id="onboard2"
+      src="../../assets/onboard2.gif"
+      alt="handshake agreement"
+    />
     <section id="threeDots">
       <object class="dot"></object>
       <object class="dotFilled"></object>
@@ -57,7 +24,7 @@
     <div class="onThree">
       <p>We will find your online order emails so you do not have to!</p>
       <p>Your security is our priority</p>
-      <p>Your data is not stored anywhere</p>
+
       <p>Sign in with your Gmail to get started!</p>
     </div>
     <button id="button" *ngIf="!showBoard" (click)="goToMain()">

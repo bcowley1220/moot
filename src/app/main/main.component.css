@@ -6,11 +6,11 @@ nav {
 }
 .mobileNav {
   width: 100%;
-  visibility: visible;
 }
 .desktopNav {
-  visibility: hidden;
+  display: none;
   width: 100%;
+  max-height: 50%;
 }
 app-mail {
   position: relative;
@@ -19,10 +19,11 @@ app-mail {
 
 @media only screen and (min-width: 1024px) {
   .mobileNav {
-    visibility: hidden;
+    display: none;
     position: absolute;
+    top: -100%;
   }
   .desktopNav {
-    visibility: visible;
+    display: block;
   }
 }

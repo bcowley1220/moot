@@ -6,9 +6,15 @@
   [style.background-size]="'90px'"
   [style.background-position]="'center'"
 ></span> -->
-<p>{{ orderForModal.retailer }}</p>
-<p>Order # {{ orderForModal.orderNum }}</p>
-<p>{{ orderForModal.orderTotal }}</p>
-<p>Est. Delivery Date: {{ orderForModal.estArrivalDate }}</p>
-<p>Snippet: {{ orderForModal.snippet }}</p>
-<button>X</button>
+<div class="modal">
+  <p class="label" id="retailer">{{ orderForModal.retailer }}</p>
+  <p class="label">Order Number:</p>
+  <p>{{ orderForModal.orderNum }}</p>
+  <p class="label">Total:</p>
+  <p>{{ orderForModal.orderTotal }}</p>
+  <p class="label">Est. Delivery Date:</p>
+  <p>{{ orderForModal.estArrivalDate }}</p>
+  <p class="label">Summary:</p>
+  <p>{{ orderForModal.snippet }}</p>
+  <button>X</button>
+</div>
