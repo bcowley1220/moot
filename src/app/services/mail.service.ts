@@ -50,6 +50,19 @@ export class MailService {
     );
   }
 
+  getEbayEmailIdCall(): Observable<any> {
+    // Called from mail component: getTargetEmailIdCall() gets the access token and stores it in the service then uses that
+    // access token to make an API call
+    // with the query params and the Bearer headers.  This returns a list of email ID's.
+    // This GET specifically targets the emails that contain the specific words we've chosen to identify orders from specific companies
+    return this.http.get(
+      'https://www.googleapis.com/gmail/v1/users/me/messages?q=from:ebay%20subject:order%20confirmed',
+      {
+        headers: { Authorization: "Bearer " + this.accessToken }
+      }
+    );
+  }
+
   splitIdsOff(emailData) {
     // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
     for (let i = 0; i < emailData.length; i++) {
@@ -108,7 +121,7 @@ export class MailService {
         );
       } else if (this.messageData[i].payload.parts[0].body.size != 0) {
         this.decodedBodyData = atob(
-          this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/")
+          this.messageData[i].payload.parts[0].body.data.replace(/\_/g, "/").replace(/\-/g, "+")
         );
       } else if (this.messageData[i].payload.parts[0].parts[0].body.data) {
         this.decodedBodyData = atob(
@@ -130,6 +143,9 @@ export class MailService {
           } else if (holder[i].value.includes("target.com")) {
             console.log("The sender is indeed Target!");
             this.isolateDataTarget(this.decodedBodyData, message);
+          } else if (holder[i].value.includes("ebay.com")) {
+            console.log("The sender is indeed Ebay!");
+            this.isolateDataEbay(this.decodedBodyData, message);
           } // Else if's for other retailers
         }
       }
@@ -173,6 +189,9 @@ export class MailService {
   }
 
   isolateDataTarget(decodedBodyData, messageData) {
+    // Builds a new object with with information needed and pushes to order array
+    // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
+    // Order # for Target are 13 long
     const retailer = "Target";
     const orderNumReg = /\d\d\d\d\d\d\d\d\d\d\d\d\d/.exec(messageData.snippet);
     const orderNum = orderNumReg[0];
@@ -205,8 +224,26 @@ export class MailService {
     this.orders.push(order);
   }
 
-  // showModal() {
-  //   // console.log(`You have clicked the index of ${{ index }} `);
-  //   this.modalBoolean = !this.modalBoolean;
-  // }
+  isolateDataEbay(decodedBodyData, messageData) {
+    console.log(decodedBodyData);
+    const retailer = "Ebay";
+    const getOrderNumReg = /(Item\sID\D?\D?\w?\D?\D\s\d+)|(Item\sI\w\D\s\d+)/.exec(decodedBodyData);
+    const orderNumReg = /\d+/.exec(getOrderNumReg[0]);
+    const orderNum = orderNumReg[0];
+    const getOrderTotalReg = /(\D?\w?\D?Total\D?\D?\w?\D?:\s\D\d+\D\d+)|(PAID\s\D\s\D\d+\D\d+)/.exec(decodedBodyData);
+    const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
+    const orderTotal = orderTotalReg[0];
+    const getEstArrivalDateReg = /(ETA:\s\w+\D\s\w+\D?\s\d+)|(Estimated\sdelivery\D\s+\w+\D?\s\w+\D?\s\d)/.exec(decodedBodyData);
+    const estArrivalDateReg = /\w+\D\s\w+\D?\s\d+/.exec(getEstArrivalDateReg[0]);
+    const estArrivalDate = estArrivalDateReg[0];
+    const order = {
+      retailer: retailer,
+      orderNum: orderNum,
+      orderTotal: orderTotal,
+      estArrivalDate: estArrivalDate,
+      bodyText: decodedBodyData
+    };
+    this.orders.push(order);
+  }
+
 }
