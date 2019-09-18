@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  top: 70px;
   height: 120px;
   margin: 17px;
   position: relative;
@@ -51,6 +52,22 @@
   bottom: 0;
   left: 20%;
 }
+.modal {
+  position: fixed;
+  bottom: 50%;
+  top: 25%;
+  left: 25%;
+  z-index: 10;
+  width: 55vw;
+  height: 60vh;
+  border: 2px solid #e54e7f;
+  background-color: #03efc1;
+  border-radius: 15px;
+  box-shadow: 10px 10px 8px #888888;
+}
+body {
+  position: absolute;
+}
 @media only screen and (min-width: 320px) and (max-width: 449px) {
   .circle {
     min-height: 45px;
@@ -89,7 +106,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-content: center;
-    margin: 0px 0px 0px 30px;
+    margin: 0px 20% 0px 20%;
   }
   .order {
     overflow: visible;
@@ -121,40 +138,14 @@
     left: 12%;
     color: hotpink;
   }
-  /* .title1{
-    position: absolute;
-    left: 32%;
-    color: grey;
-  }
-  .title2{
-    position: absolute; 
-    left: 32%;
-    color: grey;
-  } */
-}
-.modal {
-  position: fixed;
-  bottom: 50%;
-  top: 25%;
-  left: 50%;
-  z-index: 10;
-
-  width: 30vw;
-  height: 50vh;
-  border: 2px solid #e54e7f;
-  background-color: #03efc1;
-  border-radius: 15px;
-  box-shadow: 10px 10px 8px #888888;
-}
-@media only screen and (min-width: 1024px) {
   .modal {
     position: fixed;
     bottom: 50%;
     top: 25%;
-    left: 50%;
+    left: 25%;
     z-index: 10;
-    width: 30vw;
-    height: 50vh;
+    width: 50vw;
+    height: 60vh;
     border: 2px solid #e54e7f;
     background-color: #03efc1;
     border-radius: 15px;
