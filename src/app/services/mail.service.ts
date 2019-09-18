@@ -229,7 +229,6 @@ export class MailService {
     this.orders.push(order);
   }
 
-
   sortOrders() {
     this.orders
       .sort((a, b) => (a.internalDate > b.internalDate ? 1 : -1))
@@ -237,6 +236,7 @@ export class MailService {
     for (let i = 0; i < this.orders.length; i++) {
       console.log(this.orders[i].dateTime);
     }
+  }
 
   isolateDataEbay(decodedBodyData, messageData) {
     console.log(decodedBodyData);
@@ -266,6 +266,5 @@ export class MailService {
       bodyText: decodedBodyData
     };
     this.orders.push(order);
-
   }
 }
