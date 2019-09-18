@@ -28,5 +28,6 @@ app-mail {
     visibility: visible;
     display: block;
     position: absolute;
+    background: white;
   }
 }
