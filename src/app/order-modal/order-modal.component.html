@@ -6,7 +6,7 @@
   [style.background-position]="'center'"
 ></span> -->
 
-<div class="modal">
+<!-- <div class="modal">
   <p class="label" id="retailer">{{ orderForModal.retailer }}</p>
   <p class="label">Order Number:</p>
   <p>{{ orderForModal.orderNum }}</p>
@@ -17,4 +17,10 @@
   <p class="label">Summary:</p>
   <p>{{ orderForModal.snippet }}</p>
   <button (click)="showModal()">X</button>
+</div> -->
+
+<div>
+  <div [innerHtml]="dynamicHTML"></div>
 </div>
+<p *ngIf="{ dynamicHTML: '<div></div>' }" class="modal">{{ plainText }}</p>
+<button (click)="hideModal()">X</button>

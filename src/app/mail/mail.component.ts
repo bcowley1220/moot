@@ -131,10 +131,12 @@ export class MailComponent implements OnInit {
         return "url(../assets/ebay-logo.svg)";
     }
   }
+
   showModal(i) {
     // console.log(i);
     this.modalBoolean = !this.modalBoolean;
     let arrayLocation = this.orders[i];
+    console.log(this.orders[i]);
     return (this.arrayLocation = arrayLocation);
   }
   hideModal() {

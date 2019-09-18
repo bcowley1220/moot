@@ -12,9 +12,11 @@ export class OrderModalComponent implements OnInit {
   @Input() index: number;
   @Input() orderForModal: any;
   @Output() modalBoolean: EventEmitter<any> = new EventEmitter<any>();
+  @Output() xModal: EventEmitter<any> = new EventEmitter<any>();
   dynamicHTML: any;
   htmlData: any;
   orders: any[];
+  plainText: any;
   constructor(
     private mailService: MailService,
     private sanitizer: DomSanitizer
@@ -24,11 +26,12 @@ export class OrderModalComponent implements OnInit {
     // console.log(this.ordersArray);
     // console.log(this.index);
     // console.log(this.orderForModal);
-    this.dynamicHTML = `<div>${this.orderForModal.bodyText}</div>`;
+    this.dynamicHTML = `<div>${this.orderForModal.amazonHTML}</div>`;
+    this.plainText = `<div>${this.orderForModal.bodyText}</div>`;
 
     this.sanitizeHTMLContent();
     this.orders = this.mailService.orders;
-    console.log(this.orderForModal.dateTime);
+    // console.log(this.orderForModal.dateTime);
   }
 
   sanitizeHTMLContent() {
@@ -37,5 +40,8 @@ export class OrderModalComponent implements OnInit {
   showModal() {
     console.log("x button is working");
     this.modalBoolean.emit(event);
+  }
+  hideModal() {
+    this.xModal.emit(event);
   }
 }
