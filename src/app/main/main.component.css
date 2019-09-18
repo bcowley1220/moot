@@ -5,8 +5,10 @@ nav {
 }
 .mobileNav {
   width: 100%;
+
   visibility: visible;
   position: absolute;
+
 }
 
 .desktopNavLogo {
@@ -19,6 +21,7 @@ nav {
 .desktopNav {
   display: none;
   width: 100%;
+  max-height: 50%;
 }
 app-mail {
   position: relative;
@@ -28,6 +31,7 @@ app-mail {
 @media only screen and (min-width: 1024px) {
   .mobileNav {
     display: none;
+
     visibility: hidden;
     /* z-index: -10; */
     top: -100%;
@@ -37,5 +41,6 @@ app-mail {
     display: block;
     position: absolute;
     background: white;
+
   }
 }

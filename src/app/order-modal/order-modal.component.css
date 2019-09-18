@@ -1,0 +1,20 @@
+.modal {
+  height: 10vh;
+
+  display: flex;
+  flex-direction: column;
+}
+p {
+  height: 10px;
+  width: 250px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 15px;
+  margin: 10px;
+}
+.label {
+  font-weight: bold;
+  color: #e54e7f;
+}
+#retailer {
+  font-size: 25px;
+}
