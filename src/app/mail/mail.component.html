@@ -20,17 +20,11 @@
       <p class="est_del_info">Est. Delivery Date: {{ order.estArrivalDate }}</p>
     </div>
   </div>
-<<<<<<< HEAD
-  <div class="left-side">
-  </div>
-  <div class="right-side">
-=======
   <div *ngIf="modalBoolean" class="modal">
     <app-order-modal
       [ordersArray]="orders"
       [index]="i"
       [orderForModal]="arrayLocation"
     ></app-order-modal>
->>>>>>> master
   </div>
 </div>
