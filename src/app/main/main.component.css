@@ -1,15 +1,15 @@
 nav {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
-  z-index: 3;
 }
 .mobileNav {
   width: 100%;
   visibility: visible;
+  position: absolute;
 }
 .desktopNav {
-  visibility: hidden;
+  display: none;
   width: 100%;
 }
 app-mail {
@@ -19,10 +19,14 @@ app-mail {
 
 @media only screen and (min-width: 1024px) {
   .mobileNav {
+    display: none;
     visibility: hidden;
-    position: absolute;
+    /* z-index: -10; */
+    top: -100%;
   }
   .desktopNav {
     visibility: visible;
+    display: block;
+    position: absolute;
   }
 }
