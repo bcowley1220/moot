@@ -22,5 +22,5 @@
 <div>
   <div [innerHtml]="dynamicHTML"></div>
 </div>
-<p *ngIf="{ dynamicHTML: '<div></div>' }" class="modal">{{ plainText }}</p>
+<p *ngIf="{ dynamicHTML: '<div></div>' }">{{ plainText }}</p>
 <button (click)="hideModal()">X</button>
