@@ -74,9 +74,11 @@ export class MailService {
   splitIdsOff(emailData) {
     // Called from mail component. Takes the ID keys of the objects in emailData array and returns an array with just the ID keys
     for (let i = 0; i < emailData.length; i++) {
-      this.emailIdList.push(emailData[i].id);
+      if (emailData[i].id) {
+        this.emailIdList.push(emailData[i].id);
+      }
+      // console.log(this.emailIdList);
     }
-    console.log(this.emailIdList);
     return this.emailIdList;
   }
 
@@ -189,6 +191,7 @@ export class MailService {
     // Builds a new object with with information needed and pushes to order array
     // {Retailer, Order_num, est_delivery, orderTotal, emailBody, emailHTML, snippet}
     // Order # for Amazon are 3 digits followed by 7 followed by 7
+    console.log(decodedBodyData);
     const retailer = "Amazon";
     const orderNumReg = /\d\d\d\D\d\d\d\d\d\d\d\D\d\d\d\d\d\d\d/.exec(
       decodedBodyData
@@ -199,7 +202,9 @@ export class MailService {
     const orderTotal = orderTotalReg[0];
     let estArrivalDate = "";
     if (/Arriving:/.test(decodedBodyData)) {
-      const estArrivalDateReg = /\w+,\s\w+\D\d+/.exec(decodedBodyData);
+      const estArrivalDateReg = /(\w+,\s\w+\D\d+)|(Delivery\sdate\spending)/.exec(
+        decodedBodyData
+      ); //!keep track
       estArrivalDate = estArrivalDateReg[0];
     } else if (/delivery date:/.test(this.decodedBodyData)) {
       const estArrivalDateReg = /\w+\D\s\w+\s\d+\D\s\d+/.exec(

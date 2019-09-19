@@ -39,26 +39,26 @@ export class MailComponent implements OnInit {
         return (this.amazonIdData = []);
       }
     ); // List of 100 message ID's, threadID's and a next page token
-    await this.mailService.getTargetEmailIdCall().subscribe(
-      response => {
-        const targetIdData = response.messages;
-        console.log(targetIdData);
-        return (this.targetIdData = targetIdData);
-      },
-      error => {
-        return (this.targetIdData = []);
-      }
-    );
-    await this.mailService.getEbayEmailIdCall().subscribe(
-      response => {
-        const ebayIdData = response.messages;
-        console.log("Ebay Data:", ebayIdData);
-        return (this.ebayIdData = ebayIdData);
-      },
-      error => {
-        return (this.ebayIdData = []);
-      }
-    );
+    // await this.mailService.getTargetEmailIdCall().subscribe(
+    //   response => {
+    //     const targetIdData = response.messages;
+    //     console.log(targetIdData);
+    //     return (this.targetIdData = targetIdData);
+    //   },
+    //   error => {
+    //     return (this.targetIdData = []);
+    //   }
+    // );
+    // await this.mailService.getEbayEmailIdCall().subscribe(
+    //   response => {
+    //     const ebayIdData = response.messages;
+    //     console.log("Ebay Data:", ebayIdData);
+    //     return (this.ebayIdData = ebayIdData);
+    //   },
+    //   error => {
+    //     return (this.ebayIdData = []);
+    //   }
+    // );
     // Sets local variable emailIdData equal to the list of Id's
     // todo: temporarily automatically displays the emails; Must make sure to display the objects we build for the emails
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -68,6 +68,7 @@ export class MailComponent implements OnInit {
       this.ebayIdData
     );
     console.log(this.emailIdData);
+
     this.splitIdsOff();
     this.getEmailContent();
     await new Promise(resolve => setTimeout(resolve, 1000));
