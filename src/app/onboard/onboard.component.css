@@ -22,9 +22,9 @@
 }
 
 img {
-    width: 100%;
-    height: auto;
-    margin: 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
 }
 p {
   font-family: Arial, Helvetica, sans-serif;
@@ -56,7 +56,6 @@ p {
     margin: 8px;
     background-color: #03efc1;
     box-shadow: 5px 5px 5px gray;
-
   }
   .dotFilled {
     height: 12px;
@@ -66,12 +65,11 @@ p {
     background-color: yellow;
     margin: 8px;
     box-shadow: 5px 5px 5px gray;
-
   }
   #first,
   #second,
   #third {
-    margin-top: 25px;
+    /* margin-top: 25px; */
     font-size: 21px;
     text-align: center;
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -79,6 +77,7 @@ p {
     -ms-animation: fadein 2s; /* Internet Explorer */
     -o-animation: fadein 2s; /* Opera < 12.1 */
     animation: fadein 2s;
+    overflow: hidden;
   }
   @keyframes fadein {
     from {
@@ -137,8 +136,8 @@ p {
     font-weight: bold;
   }
   #onboard2 {
-    width: 70vw;
-    height: auto;
+    width: auto;
+    height: 80vh;
   }
   #button {
     margin: 20px;

@@ -123,7 +123,7 @@ export class MailService {
 
   // .replace(/-/g, '+').replace(/_/g, '/')
   decodeData() {
-    let amazonHTML = '';
+    let amazonHTML = "";
     console.log(this.messageData);
     for (let i = 0; i < this.messageData.length; i++) {
       if (this.messageData[i].payload.body.size != 0) {
@@ -139,7 +139,7 @@ export class MailService {
             .replace(/\_/g, "/")
             .replace(/\-/g, "+")
         );
-        if (this.messageData[i].payload.parts[0].mimetype === 'text/html') {
+        if (this.messageData[i].payload.parts[0].mimetype === "text/html") {
           amazonHTML = atob(
             this.messageData[i].payload.parts[0].body.data
               .replace(/\_/g, "/")

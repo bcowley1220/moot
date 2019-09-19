@@ -1,9 +1,11 @@
 .modal {
-  height: 10vh;
-
+  height: 90%;
+  width: auto;
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
+  overflow: scroll;
+  background: white;
 }
 p {
   height: 10px;
