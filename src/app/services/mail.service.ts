@@ -197,9 +197,16 @@ export class MailService {
       decodedBodyData
     );
     const orderNum = orderNumReg[0];
-    const getOrderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(decodedBodyData);
-    const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
-    const orderTotal = orderTotalReg[0];
+    let orderTotal = "";
+    if (/Order\sTotal\D\s\D\d+\D\d+/.test(decodedBodyData)) {
+      const getOrderTotalReg = /Order\sTotal\D\s\D\d+\D\d+/.exec(
+        decodedBodyData
+      );
+      const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
+      orderTotal = orderTotalReg[0];
+    }
+    // const orderTotalReg = /\D\d+\D\d+/.exec(getOrderTotalReg[0]);
+    // orderTotal = orderTotalReg[0];
     let estArrivalDate = "";
     if (/Arriving:/.test(decodedBodyData)) {
       const estArrivalDateReg = /(\w+,\s\w+\D\d+)|(Delivery\sdate\spending)/.exec(
